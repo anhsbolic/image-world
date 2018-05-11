@@ -3,4 +3,11 @@
     <color name="colorPrimary">#be383d</color>
     <color name="colorPrimaryDark">#d44045</color>
     <color name="colorAccent">#40ff76</color>
+
+    <!-- BUTTON -->
+    <color name="colorGoogleButton">#d6d6d6</color>
+
+    <!-- BACKGROUND -->
+    <color name="colorBgProgressBar">#45000000</color>
+
 </resources>

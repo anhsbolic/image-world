@@ -3,4 +3,12 @@
 
     <!-- SPLASH -->
     <string name="splash_screen_title">Image World</string>
+
+    <!-- LOGIN -->
+    <string name="login_title">Image World</string>
+    <string name="login_id">ID</string>
+    <string name="login_password">Password</string>
+    <string name="login_sign_in">SIGN IN</string>
+    <string name="login_sign_in_with_google">Sign In with Google</string>
+    <string name="login_register">Don\'t Have ID? Register Here</string>
 </resources>

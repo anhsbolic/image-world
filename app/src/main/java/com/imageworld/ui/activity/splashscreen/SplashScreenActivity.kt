@@ -1,9 +1,11 @@
 package com.imageworld.ui.activity.splashscreen
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.imageworld.R
+import com.imageworld.ui.activity.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
@@ -21,7 +23,11 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     }
 
     override fun goToLogin() {
-        Handler().postDelayed({},2800)
+        Handler().postDelayed({
+            val intentLogin = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+            startActivity(intentLogin)
+            finish()
+        },2800)
     }
 
     override fun goToDashboard() {

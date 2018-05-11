@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.login.LoginActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/loginImgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_camera"
+            tools:ignore="ContentDescription"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/loginEtIdLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/loginTxtTitle"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/loginTxtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="textStart"
+            app:layout_constraintTop_toTopOf="@id/loginImgLogo"
+            app:layout_constraintBottom_toBottomOf="@id/loginImgLogo"
+            app:layout_constraintLeft_toRightOf="@id/loginImgLogo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginStart="10dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/loginEtIdLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/MyTextInputLayoutStyle"
+            android:hint="@string/login_id"
+            android:textColorHint="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/loginImgLogo"
+            app:layout_constraintBottom_toTopOf="@id/loginEtPasswordLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="40dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/loginEtId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:paddingBottom="20dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/loginEtPasswordLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/MyTextInputLayoutStyle"
+            android:hint="@string/login_password"
+            android:textColorHint="@color/colorPrimary"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@id/loginEtIdLayout"
+            app:layout_constraintBottom_toTopOf="@id/loginBtnSignIn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/loginEtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textPassword"
+                android:paddingBottom="20dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBtnSignIn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:theme="@style/PrimaryButton"
+            android:text="@string/login_sign_in"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/loginEtPasswordLayout"
+            app:layout_constraintBottom_toTopOf="@id/loginBtnGoogleSignIn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="30dp"/>
+
+        <Button
+            android:id="@+id/loginBtnGoogleSignIn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:theme="@style/GoogleButton"
+            android:text="@string/login_sign_in_with_google"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:drawableStart="@drawable/ic_googleicon"
+            app:layout_constraintTop_toBottomOf="@id/loginBtnSignIn"
+            app:layout_constraintBottom_toTopOf="@id/loginBtnRegister"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/loginBtnRegister"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/login_register"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@id/loginBtnGoogleSignIn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="10dp"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginProgressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/colorBgProgressBar"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:theme="@style/CircularProgressPrimary"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

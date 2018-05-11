@@ -37,6 +37,10 @@
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
 
+    <style name="GoogleButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorGoogleButton</item>
+    </style>
+
     <style name="CircularProgressPrimary" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
