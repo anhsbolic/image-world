@@ -26,4 +26,11 @@
     <string name="dashboard_nav_home">Home</string>
     <string name="dashboard_nav_capture">Capture</string>
     <string name="dashboard_nav_profile">Profile</string>
+    <string name="dashboard_title">ImageWorld</string>
+    <string name="dashboard_dialog_exit_message">Exit from App?</string>
+    <string name="dashboard_dialog_exit_positive">Yes</string>
+    <string name="dashboard_dialog_exit_negative">No</string>
+    <string name="post_seen_by_title">seen by -</string>
+
+    <!-- HOME -->
 </resources>

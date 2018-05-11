@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#d44045</color>
     <color name="colorAccent">#40ff76</color>
 
+    <!-- TEXT -->
+    <color name="colorTextDefault">#232323</color>
+    <color name="colorTextSoftGray">#898989</color>
+
     <!-- BUTTON -->
     <color name="colorGoogleButton">#d6d6d6</color>
 

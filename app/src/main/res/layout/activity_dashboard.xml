@@ -7,20 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.dashboard.DashboardActivity">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/dashboardToolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?android:attr/actionBarSize"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
-        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-        <!--app:subtitleTextColor="@android:color/white"-->
-        <!--app:titleTextColor="@android:color/white" />-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/dashboardToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@android:color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:subtitleTextColor="@color/colorPrimaryDark"
+        app:titleTextColor="@color/colorPrimaryDark"
+        android:elevation="3dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/dashboard_title"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginEnd="15dp"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/dashboardFrameContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/dashboardToolbar"
         android:layout_above="@+id/dashboardBottomNav"
         android:animateLayoutChanges="true"/>
 

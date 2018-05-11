@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_more_vert_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="9c0a00" />
-                            <entry key="outputName" value="nav_profile" />
+                            <entry key="color" value="676767" />
+                            <entry key="outputName" value="more_options_gray" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\anhar\Pictures\googleicon.svg" />
                           </map>
