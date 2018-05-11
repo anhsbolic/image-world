@@ -1,14 +1,16 @@
 package com.imageworld.ui.activity.login
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.imageworld.R
+import com.imageworld.ui.activity.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
 
-    lateinit var presenter: LoginPresenter
+    private lateinit var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         // Sign In
         loginBtnSignIn.setOnClickListener { presenter.signIn() }
+
+        // Register
+        loginBtnRegister.setOnClickListener { presenter.register() }
     }
 
     override fun showProgress() {
@@ -43,6 +48,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun goToRegister() {
+        val intentRegister = Intent(this@LoginActivity, RegisterActivity::class.java)
+        startActivity(intentRegister)
     }
 
 }
