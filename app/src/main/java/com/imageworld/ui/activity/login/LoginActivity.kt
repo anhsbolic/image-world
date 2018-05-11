@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.imageworld.R
+import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -45,6 +46,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun goToDashboard() {
+        val intentDashboard = Intent(this@LoginActivity, DashboardActivity::class.java)
+        startActivity(intentDashboard)
+        finish()
     }
 
     override fun goToRegister() {

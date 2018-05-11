@@ -21,4 +21,9 @@
     <string name="register_confirm_password">Confirm Password</string>
     <string name="register_btn_register">REGISTER</string>
     <string name="register_btn_login">Already have ID? Login here</string>
+
+    <!-- DASHBOARD -->
+    <string name="dashboard_nav_home">Home</string>
+    <string name="dashboard_nav_capture">Capture</string>
+    <string name="dashboard_nav_profile">Profile</string>
 </resources>

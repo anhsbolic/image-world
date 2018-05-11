@@ -4,7 +4,7 @@ class SplashScreenPresenter (val view : SplashScreenContract.View)
     : SplashScreenContract.Presenter {
 
     override fun checkUser() {
-        val isLogin = false
+        val isLogin = true
 
         if (isLogin) {
             view.goToDashboard()

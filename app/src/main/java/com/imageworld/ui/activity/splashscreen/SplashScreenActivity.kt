@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.imageworld.R
+import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
@@ -31,6 +32,10 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     }
 
     override fun goToDashboard() {
-        Handler().postDelayed({},2800)
+        Handler().postDelayed({
+            val intentDashboard = Intent(this@SplashScreenActivity, DashboardActivity::class.java)
+            startActivity(intentDashboard)
+            finish()
+        },2800)
     }
 }
