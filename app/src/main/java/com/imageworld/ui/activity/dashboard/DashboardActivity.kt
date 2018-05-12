@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.imageworld.R
 import com.imageworld.ui.fragment.home.HomeFragment
+import com.imageworld.ui.fragment.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class DashboardActivity : AppCompatActivity() {
                 Toast.makeText(this@DashboardActivity,"CAMERA", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_profile->{
-                Toast.makeText(this@DashboardActivity,"PROFILE", Toast.LENGTH_SHORT).show()
+                fragment = ProfileFragment()
             }
             else -> {
                 fragment = HomeFragment()

@@ -7,11 +7,16 @@
     <!-- TEXT -->
     <color name="colorTextDefault">#232323</color>
     <color name="colorTextSoftGray">#898989</color>
+    <color name="colorTextGray">#585858</color>
 
     <!-- BUTTON -->
     <color name="colorGoogleButton">#d6d6d6</color>
 
     <!-- BACKGROUND -->
     <color name="colorBgProgressBar">#45000000</color>
+
+    <!-- LINE -->
+    <color name="colorLineSeparator">#979797</color>
+
 
 </resources>
