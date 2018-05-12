@@ -7,6 +7,9 @@ import com.imageworld.model.UserProfile
 interface ProfileContract {
 
     interface View {
+
+        fun initRecyclerView()
+
         fun showProfile(profile: UserProfile)
 
         fun setGridView(postList: MutableList<Post>)

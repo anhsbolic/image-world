@@ -25,8 +25,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     private lateinit var presenter: ProfilePresenter
     private lateinit var userProfile : UserProfile
     private var postList: MutableList<Post> = ArrayList()
-    private lateinit var adapterRvPost: RecyclerView.Adapter<*>
-    private lateinit var layoutManagerRvPost: RecyclerView.LayoutManager
+    private lateinit var adapterRvPostList: RecyclerView.Adapter<*>
+    private lateinit var layoutManagerRvPostList: RecyclerView.LayoutManager
+    private lateinit var adapterRvPostGrid: RecyclerView.Adapter<*>
+    private lateinit var layoutManagerRvPostGrid: RecyclerView.LayoutManager
+    private lateinit var gridItemDecoration: GridSpacingItemDecoration
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,6 +50,9 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
         //Get UserProfile
         presenter.getProfile()
+
+        //Init RecyclerView
+        initRecyclerView()
 
         //Init page with grid layout
         presenter.gridView()
@@ -89,6 +95,20 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         }
     }
 
+    override fun initRecyclerView() {
+        // Grid
+        adapterRvPostGrid = PostGridAdapter(postList)
+        layoutManagerRvPostGrid = GridLayoutManager(activity,3)
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_layout_margin)
+        gridItemDecoration = GridSpacingItemDecoration(3,
+                spacingInPixels, true, 0)
+
+        //List
+        adapterRvPostList = PostListAdapter(postList)
+        layoutManagerRvPostList = LinearLayoutManager(activity)
+
+    }
+
     override fun showProfile(profile: UserProfile) {
         userProfile = profile
 
@@ -107,15 +127,10 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
         profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_on)
 
-        adapterRvPost = PostGridAdapter(postList)
-        layoutManagerRvPost = GridLayoutManager(activity,3)
-        profileRvPost.adapter = adapterRvPost
-        profileRvPost.layoutManager = layoutManagerRvPost
-        profileRvPost.setHasFixedSize(false)
+        profileRvPost.layoutManager = layoutManagerRvPostGrid
+        profileRvPost.addItemDecoration(gridItemDecoration)
+        profileRvPost.adapter = adapterRvPostGrid
 
-        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_layout_margin)
-        profileRvPost.addItemDecoration(GridSpacingItemDecoration(3,
-                spacingInPixels, true, 0))
 
         if (profileRvPost != null) {
             if (this.postList.isNotEmpty()) {
@@ -125,7 +140,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             for (i in 0 until postList.size) {
                 this.postList.add(postList[i])
                 val lastIndex = this.postList.lastIndex
-                adapterRvPost.notifyItemInserted(lastIndex)
+                adapterRvPostGrid.notifyItemInserted(lastIndex)
             }
         }
     }
@@ -136,11 +151,9 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
         profileMenuList.setImageResource(R.drawable.profile_menu_list_on)
 
-        adapterRvPost = PostListAdapter(postList)
-        layoutManagerRvPost = LinearLayoutManager(activity)
-        profileRvPost.adapter = adapterRvPost
-        profileRvPost.layoutManager = layoutManagerRvPost
-        profileRvPost.setHasFixedSize(false)
+        profileRvPost.adapter = adapterRvPostList
+        profileRvPost.layoutManager = layoutManagerRvPostList
+        profileRvPost.removeItemDecoration(gridItemDecoration)
 
         if (profileRvPost != null) {
             if (this.postList.isNotEmpty()) {
@@ -150,7 +163,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             for (i in 0 until postList.size) {
                 this.postList.add(postList[i])
                 val lastIndex = this.postList.lastIndex
-                adapterRvPost.notifyItemInserted(lastIndex)
+                adapterRvPostList.notifyItemInserted(lastIndex)
             }
         }
     }
