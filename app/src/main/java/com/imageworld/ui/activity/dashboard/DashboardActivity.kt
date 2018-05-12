@@ -16,8 +16,11 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var actionBar: ActionBar
-    private var currentFragment: Fragment? = null
-    private var isFirstFragment: Boolean = true
+    private lateinit var currentFragment : Fragment
+    private lateinit var lastFragment : Fragment
+
+    private var isFirstVisit : Boolean = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,17 @@ class DashboardActivity : AppCompatActivity() {
         actionBar = supportActionBar!!
         actionBar.title = null
 
+        //Fragment backStack management
+        supportFragmentManager.addOnBackStackChangedListener {
+            lastFragment = if(supportFragmentManager.backStackEntryCount > 0){
+                val fragments = supportFragmentManager.fragments
+                fragments[fragments.size-1]
+            }else{
+                val fragments = supportFragmentManager.fragments
+                fragments[0]
+            }
+        }
+
         displaySelectedScreen(R.id.nav_home)
 
         dashboardBottomNav.setOnNavigationItemSelectedListener {item: MenuItem ->
@@ -38,39 +52,37 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun displaySelectedScreen(itemId: Int) {
-        var fragment: Fragment? = null
 
         when(itemId){
             R.id.nav_home->{
-                fragment = HomeFragment()
+                currentFragment = HomeFragment()
             }
             R.id.nav_camera->{
                 Toast.makeText(this@DashboardActivity,"CAMERA", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_profile->{
-                fragment = ProfileFragment()
+                currentFragment = ProfileFragment()
             }
             else -> {
-                fragment = HomeFragment()
+                currentFragment = HomeFragment()
             }
         }
 
-        if(fragment != null){
-            if(isFirstFragment){
-                isFirstFragment = false
+        if(isFirstVisit){
+            isFirstVisit = false
+            lastFragment = currentFragment
+            supportFragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.dashboardFrameContainer, currentFragment)
+                    .commit()
+        }else{
+            if(currentFragment.javaClass.simpleName != lastFragment.javaClass.simpleName){
                 supportFragmentManager.beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.dashboardFrameContainer, fragment)
+                        .replace(R.id.dashboardFrameContainer, currentFragment,
+                                currentFragment.javaClass.simpleName)
+                        .addToBackStack(lastFragment.javaClass.simpleName)
                         .commit()
-                currentFragment = fragment
-            }else{
-                if(fragment.javaClass.simpleName != currentFragment!!.javaClass.simpleName){
-                    supportFragmentManager.beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .replace(R.id.dashboardFrameContainer, fragment)
-                            .commit()
-                    currentFragment = fragment
-                }
             }
         }
     }
