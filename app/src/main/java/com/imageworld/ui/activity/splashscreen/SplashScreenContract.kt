@@ -1,5 +1,7 @@
 package com.imageworld.ui.activity.splashscreen
 
+import android.content.Context
+
 interface SplashScreenContract {
 
     interface View {
@@ -9,6 +11,6 @@ interface SplashScreenContract {
     }
 
     interface Presenter {
-        fun checkUser()
+        fun checkUser(context: Context)
     }
 }

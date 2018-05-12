@@ -1,5 +1,7 @@
 package com.imageworld.ui.activity.login
 
+import android.content.Context
+
 interface LoginContract {
 
     interface View {
@@ -13,7 +15,7 @@ interface LoginContract {
     }
 
     interface Presenter {
-        fun signIn()
+        fun signIn(context: Context, token: String)
 
         fun googleSignIn()
 

@@ -1,5 +1,6 @@
 package com.imageworld.ui.fragment.profile
 
+import android.content.Context
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 
@@ -22,7 +23,7 @@ interface ProfileContract {
 
         fun listView()
 
-        fun logout()
+        fun logout(context: Context)
     }
 
 }

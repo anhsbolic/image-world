@@ -21,7 +21,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         presenter = LoginPresenter(this@LoginActivity)
 
         // Sign In
-        loginBtnSignIn.setOnClickListener { presenter.signIn() }
+        loginBtnSignIn.setOnClickListener {
+            val token = "dsfag35w467i"
+            presenter.signIn(this@LoginActivity, token)
+        }
 
         // Register
         loginBtnRegister.setOnClickListener { presenter.register() }

@@ -20,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
         presenter = SplashScreenPresenter(this@SplashScreenActivity)
 
         // Check User
-        presenter.checkUser()
+        presenter.checkUser(this@SplashScreenActivity)
     }
 
     override fun goToLogin() {
