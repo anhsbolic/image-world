@@ -16,6 +16,7 @@ import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.login.LoginActivity
+import com.imageworld.ui.activity.singlePost.SinglePostActivity
 import com.imageworld.ui.adapter.PostGridAdapter
 import com.imageworld.ui.adapter.PostListAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -97,7 +98,13 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
     override fun initRecyclerView() {
         // Grid
-        adapterRvPostGrid = PostGridAdapter(postList)
+        adapterRvPostGrid = PostGridAdapter(postList, object : PostGridAdapter.OnPhotoClickListener{
+            override fun onPhotoClick(post: Post) {
+                val intentSinglePost = Intent(activity, SinglePostActivity::class.java)
+                intentSinglePost.putExtra(SinglePostActivity.INTENT_POST, post)
+                startActivity(intentSinglePost)
+            }
+        })
         layoutManagerRvPostGrid = GridLayoutManager(activity,3)
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.grid_layout_margin)
         gridItemDecoration = GridSpacingItemDecoration(3,

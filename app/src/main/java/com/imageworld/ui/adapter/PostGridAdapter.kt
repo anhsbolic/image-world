@@ -11,12 +11,22 @@ import com.imageworld.R
 import com.imageworld.model.Post
 import kotlinx.android.synthetic.main.component_post_grid.view.*
 
-class PostGridAdapter(private val postList: List<Post>): RecyclerView.Adapter<PostGridAdapter.ViewHolder>(){
+class PostGridAdapter(private val postList: List<Post>,
+                      private val onPhotoClickListener: PostGridAdapter.OnPhotoClickListener)
+    : RecyclerView.Adapter<PostGridAdapter.ViewHolder>(){
 
     private lateinit var mContext: Context
 
+    interface OnPhotoClickListener {
+        fun onPhotoClick(post: Post)
+    }
+
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         internal var imgPost: ImageView = itemView.postGridImg
+
+        fun setOnClickListener(onClickListener: View.OnClickListener){
+            itemView.setOnClickListener(onClickListener)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +39,10 @@ class PostGridAdapter(private val postList: List<Post>): RecyclerView.Adapter<Po
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
+
+        holder.setOnClickListener(View.OnClickListener {
+            onPhotoClickListener.onPhotoClick(postList[holder.adapterPosition])
+        })
     }
 
     override fun getItemCount(): Int {
