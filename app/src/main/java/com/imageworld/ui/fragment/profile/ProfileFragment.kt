@@ -104,7 +104,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 spacingInPixels, true, 0)
 
         //List
-        adapterRvPostList = PostListAdapter(postList)
+        adapterRvPostList = PostListAdapter(postList, object : PostListAdapter.OnOptionClickListener{
+            override fun onOptionClick() {
+                Toast.makeText(activity,"OPTIONS",Toast.LENGTH_SHORT).show()
+            }
+        })
         layoutManagerRvPostList = LinearLayoutManager(activity)
 
     }

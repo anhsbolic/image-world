@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.ui.adapter.PostListAdapter
@@ -40,7 +41,11 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun initRecyclerView() {
-        adapterRvPost = PostListAdapter(postList)
+        adapterRvPost = PostListAdapter(postList, object : PostListAdapter.OnOptionClickListener {
+            override fun onOptionClick() {
+                Toast.makeText(activity,"OPTIONS",Toast.LENGTH_SHORT).show()
+            }
+        })
         layoutManagerRvPost = LinearLayoutManager(activity)
         homeRv.adapter = adapterRvPost
         homeRv.layoutManager = layoutManagerRvPost

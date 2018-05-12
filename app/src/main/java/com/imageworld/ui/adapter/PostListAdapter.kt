@@ -14,10 +14,15 @@ import com.imageworld.model.Post
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.component_post.view.*
 
-class PostListAdapter(private val postList : List<Post>)
+class PostListAdapter(private val postList : List<Post>,
+                      private val onOptionClickListener: PostListAdapter.OnOptionClickListener)
     : RecyclerView.Adapter<PostListAdapter.ViewHolder>(){
 
     private lateinit var mContext: Context
+
+    interface OnOptionClickListener{
+        fun onOptionClick()
+    }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         internal var imgProfile: CircleImageView = itemView.postImgProfile
@@ -39,16 +44,15 @@ class PostListAdapter(private val postList : List<Post>)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(mContext).load(postList[position].imageProfile).into(holder.imgProfile)
-//        holder.imgProfile.setImageResource(postList[position].imageProfile)
         holder.txtUsername.text = postList[position].username
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
-//        holder.imgPost.setImageResource(postList[position].imagePost)
         holder.txtSeenBy.text = postList[position].seenBy
         holder.txtPost.text = postList[position].post
         val totalComments = postList[position].totalComment
         val seeComments = "see $totalComments comments"
         holder.txtSeeComments.text = seeComments
 
+        holder.btnOptions.setOnClickListener { onOptionClickListener.onOptionClick() }
     }
 
     override fun getItemCount(): Int {
