@@ -4,17 +4,25 @@ import android.content.Context
 import android.os.Handler
 
 class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
-    override fun signIn(context: Context, token: String) {
-        view.showProgress()
+    override fun signIn(username: String, password: String, context: Context, token: String) {
+        val isUsernameValid = isUsernameValid(username)
+        val isPasswordValid = isPasswordValid(password)
 
-        saveLoginToken(context, token)
+        if (isUsernameValid && isPasswordValid) {
+            view.showErrorInput(true,true)
+            view.showProgress()
 
-        Handler().postDelayed({
-            view.hideProgress()
+            saveLoginToken(context, token)
+
             Handler().postDelayed({
-                view.goToDashboard()
-            },30)
-        },1800)
+                view.hideProgress()
+                Handler().postDelayed({
+                    view.goToDashboard()
+                },30)
+            },1800)
+        } else {
+            view.showErrorInput(isUsernameValid, isPasswordValid)
+        }
     }
 
     override fun googleSignIn() {
@@ -27,5 +35,25 @@ class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
     private fun saveLoginToken(context:Context, token: String) {
         val pref = context.getSharedPreferences("LoginPref", Context.MODE_PRIVATE)
         pref.edit().putString("LoginToken", token).apply()
+    }
+
+    private fun isUsernameValid(username: String): Boolean {
+        var valid = true
+
+        if (username.isEmpty()) {
+            valid = false
+        }
+
+        return valid
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        var valid = true
+
+        if (password.isEmpty()) {
+            valid = false
+        }
+
+        return valid
     }
 }

@@ -22,12 +22,35 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         // Sign In
         loginBtnSignIn.setOnClickListener {
+            val username = loginEtId.text.toString().trim()
+            val password = loginEtPassword.text.toString().trim()
             val token = "dsfag35w467i"
-            presenter.signIn(this@LoginActivity, token)
+
+            presenter.signIn(username, password,this@LoginActivity, token)
         }
 
         // Register
         loginBtnRegister.setOnClickListener { presenter.register() }
+    }
+
+    override fun showErrorInput(isUsernameValid: Boolean, isPasswordValid: Boolean) {
+        //Password
+        if (!isPasswordValid) {
+            loginEtPasswordLayout.isErrorEnabled = true
+            loginEtPasswordLayout.error = "password required"
+        } else {
+            loginEtPasswordLayout.error = null
+            loginEtPasswordLayout.isErrorEnabled = false
+        }
+
+        // Username
+        if (!isUsernameValid) {
+            loginEtIdLayout.isErrorEnabled = true
+            loginEtIdLayout.error = "username required"
+        } else {
+            loginEtIdLayout.error = null
+            loginEtIdLayout.isErrorEnabled = false
+        }
     }
 
     override fun showProgress() {

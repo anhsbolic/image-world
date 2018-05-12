@@ -5,6 +5,8 @@ import android.content.Context
 interface LoginContract {
 
     interface View {
+        fun showErrorInput(isUsernameValid: Boolean, isPasswordValid: Boolean)
+
         fun showProgress()
 
         fun hideProgress()
@@ -15,7 +17,7 @@ interface LoginContract {
     }
 
     interface Presenter {
-        fun signIn(context: Context, token: String)
+        fun signIn(username: String, password: String, context: Context, token: String)
 
         fun googleSignIn()
 
