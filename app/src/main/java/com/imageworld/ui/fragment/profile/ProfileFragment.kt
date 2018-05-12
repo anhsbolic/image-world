@@ -1,18 +1,21 @@
 package com.imageworld.ui.fragment.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.helper.GridSpacingItemDecoration
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
+import com.imageworld.ui.activity.dashboard.DashboardActivity
+import com.imageworld.ui.activity.login.LoginActivity
 import com.imageworld.ui.adapter.PostGridAdapter
 import com.imageworld.ui.adapter.PostListAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -31,6 +34,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,21 +48,45 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         //Get UserProfile
         presenter.getProfile()
 
-        //Init RecyclerView
-        initRecyclerView()
-
         //Init page with grid layout
         presenter.gridView()
 
         //Grid View
         profileMenuGrid.setOnClickListener { presenter.gridView() }
 
-        //LIst View
+        //Lst View
         profileMenuList.setOnClickListener { presenter.listView() }
     }
 
-    override fun initRecyclerView() {
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.menu_user_profile, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item!!.itemId) {
+            R.id.menu_update->{
+                Toast.makeText(activity,"UPDATE",Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_settings->{
+                Toast.makeText(activity,"SETTINGS",Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_logout->{
+                AlertDialog.Builder(activity as DashboardActivity)
+                        .setMessage(R.string.profile_menu_dialog_exit_message)
+                        .setPositiveButton(R.string.profile_menu_dialog_exit_positive,{ _ , _ ->
+                            presenter.logout()
+                        })
+                        .setNegativeButton(R.string.profile_menu_dialog_exit_negative, null)
+                        .show()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     override fun showProfile(profile: UserProfile) {
@@ -121,6 +153,12 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 adapterRvPost.notifyItemInserted(lastIndex)
             }
         }
+    }
+
+    override fun goToLogin() {
+        val intentLogin = Intent(activity, LoginActivity::class.java)
+        startActivity(intentLogin)
+        activity!!.finish()
     }
 
     companion object {

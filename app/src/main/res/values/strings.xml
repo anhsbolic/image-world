@@ -32,8 +32,11 @@
     <string name="dashboard_dialog_exit_negative">No</string>
     <string name="post_seen_by_title">seen by -</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!-- HOME -->
+    <!-- USER PROFILE -->
+    <string name="profile_menu_update">update</string>
+    <string name="profile_menu_settings">settings</string>
+    <string name="profile_menu_logout">logout</string>
+    <string name="profile_menu_dialog_exit_message">Are you sure to logout?</string>
+    <string name="profile_menu_dialog_exit_positive">Yes</string>
+    <string name="profile_menu_dialog_exit_negative">No</string>
 </resources>

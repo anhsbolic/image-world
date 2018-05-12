@@ -156,4 +156,8 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         view.setListView(postList)
     }
 
+    override fun logout() {
+        view.goToLogin()
+    }
+
 }
