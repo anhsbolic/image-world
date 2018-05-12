@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.Post
 import de.hdodenhof.circleimageview.CircleImageView
@@ -37,9 +38,11 @@ class PostListAdapter(private val postList : List<Post>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.imgProfile.setImageResource(postList[position].imageProfile)
+        Glide.with(mContext).load(postList[position].imageProfile).into(holder.imgProfile)
+//        holder.imgProfile.setImageResource(postList[position].imageProfile)
         holder.txtUsername.text = postList[position].username
-        holder.imgPost.setImageResource(postList[position].imagePost)
+        Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
+//        holder.imgPost.setImageResource(postList[position].imagePost)
         holder.txtSeenBy.text = postList[position].seenBy
         holder.txtPost.text = postList[position].post
         val totalComments = postList[position].totalComment
