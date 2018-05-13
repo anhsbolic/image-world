@@ -7,6 +7,7 @@ import android.os.Handler
 import com.imageworld.R
 import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.login.LoginActivity
+import com.parse.ParseAnalytics
 
 class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
@@ -15,6 +16,9 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+
+        // Init Parse Analytics
+        ParseAnalytics.trackAppOpenedInBackground(intent)
 
         // Init Presenter
         presenter = SplashScreenPresenter(this@SplashScreenActivity)

@@ -2,13 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.imageworld">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".StarterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="f780d6901e1438a7826cf3d71ffa8ca2f3b38db7" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="fcf8beca9bef6c09fdab482db4db6256c6490a0d" />
+
         <activity
             android:name=".ui.activity.splashscreen.SplashScreenActivity"
             android:configChanges="orientation"
