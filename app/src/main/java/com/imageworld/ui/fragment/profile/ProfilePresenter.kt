@@ -7,13 +7,17 @@ import com.parse.ParseUser
 
 class ProfilePresenter(private val view : ProfileContract.View) : ProfileContract.Presenter {
 
+    private lateinit var username : String
+
     override fun getProfile() {
+        val user = ParseUser.getCurrentUser()
+        val id = user.objectId
+        username = user.username
+        val fisrtname = user.getString("first_name")
         val userProfile = UserProfile(1,
                 R.drawable.img_profil_1,
-                "jacksparrow",
-                "bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio " +
-                        "bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio " +
-                        "bio bio bio bio bio bio bio bio bio bio bio bio bio bio ")
+                username,
+                fisrtname)
         view.showProfile(userProfile)
     }
 
@@ -21,7 +25,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post1 = Post(
                 1,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_1,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -29,7 +33,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post2 = Post(
                 2,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_2,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -37,7 +41,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post3 = Post(
                 3,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_3,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -45,7 +49,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post4 = Post(
                 4,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_4,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -53,7 +57,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post5 = Post(
                 5,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_5,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -61,7 +65,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post6 = Post(
                 6,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_6,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -69,7 +73,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post7 = Post(
                 7,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_7,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -91,7 +95,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post1 = Post(
                 1,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_1,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -99,7 +103,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post2 = Post(
                 2,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_2,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -107,7 +111,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post3 = Post(
                 3,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_3,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -115,7 +119,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post4 = Post(
                 4,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_4,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -123,7 +127,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post5 = Post(
                 5,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_5,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -131,7 +135,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post6 = Post(
                 6,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_6,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
@@ -139,7 +143,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val post7 = Post(
                 7,
                 R.drawable.img_profil_1,
-                "jacksparrow",
+                username,
                 R.drawable.img_7,
                 "Dude, Jodi, Dean, and others",
                 "yeah dude. it is all about PASSION....",
