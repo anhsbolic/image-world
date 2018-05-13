@@ -2,6 +2,7 @@ package com.imageworld.ui.activity.register
 
 import android.os.Handler
 import android.util.Patterns
+import com.parse.ParseUser
 
 class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Presenter {
 
@@ -23,13 +24,26 @@ class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Pre
             val isPasswordMatch = isPasswordMatch(password, confirmPassword)
             if (isPasswordMatch) {
                 view.showErrorPasswordNotMatch(true)
-
                 view.showProgress()
 
-                Handler().postDelayed({
-                    view.hideProgress()
-                    view.backToLogin()
-                }, 2800)
+                val user = ParseUser()
+
+                user.username = username
+                user.email = email
+                user.setPassword(password)
+                user.put("first_name", firstName)
+                user.put("last_name",lastName)
+
+                user.signUpInBackground { e ->
+                    if (e == null) {
+                        Handler().postDelayed({
+                            view.hideProgress()
+                            view.goToDashboard()
+                        }, 1800)
+                    } else {
+                        view.showRegisterError(e.message)
+                    }
+                }
             } else {
                 view.showErrorPasswordNotMatch(false)
             }

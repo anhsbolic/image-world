@@ -1,10 +1,9 @@
 package com.imageworld.ui.fragment.profile
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
+import com.parse.ParseUser
 
 class ProfilePresenter(private val view : ProfileContract.View) : ProfileContract.Presenter {
 
@@ -158,11 +157,13 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         view.setListView(postList)
     }
 
-    override fun logout(context: Context) {
-        val pref = context.getSharedPreferences("LoginPref", AppCompatActivity.MODE_PRIVATE)
-        if(pref.contains("LoginToken")){
-            pref.edit().clear().apply()
-            view.goToLogin()
+    override fun logout() {
+        ParseUser.logOutInBackground { e ->
+            if (e == null) {
+                view.goToLogin()
+            } else {
+                view.showErrorLogout(e.message)
+            }
         }
     }
 

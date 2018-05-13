@@ -84,7 +84,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 AlertDialog.Builder(activity as DashboardActivity)
                         .setMessage(R.string.profile_menu_dialog_exit_message)
                         .setPositiveButton(R.string.profile_menu_dialog_exit_positive,{ _ , _ ->
-                            presenter.logout(activity as DashboardActivity)
+                            presenter.logout()
                         })
                         .setNegativeButton(R.string.profile_menu_dialog_exit_negative, null)
                         .show()
@@ -177,6 +177,16 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 adapterRvPostList.notifyItemInserted(lastIndex)
             }
         }
+    }
+
+    override fun showErrorLogout(e: String?) {
+        var error = "Logout failed, please try again..."
+
+        if (e != null) {
+            error = e
+        }
+
+        Toast.makeText(activity, error, Toast.LENGTH_LONG).show()
     }
 
     override fun goToLogin() {

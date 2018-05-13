@@ -1,30 +1,22 @@
 package com.imageworld.ui.activity.splashscreen
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import android.os.Handler
+import com.parse.ParseUser
 
 class SplashScreenPresenter (val view : SplashScreenContract.View)
     : SplashScreenContract.Presenter {
 
-    override fun checkUser(context: Context) {
-        val isLogin = isLogin(context)
+    override fun checkUser() {
+        val currentUser = ParseUser.getCurrentUser()
 
-        if (isLogin) {
-            view.goToDashboard()
+        if (currentUser != null) {
+            Handler().postDelayed({
+                view.goToDashboard()
+            },800)
         } else {
-            view.goToLogin()
+            Handler().postDelayed({
+                view.goToLogin()
+            },800)
         }
     }
-
-    private fun isLogin(context:Context): Boolean {
-        var isLogin = false
-
-        val pref = context.getSharedPreferences("LoginPref", AppCompatActivity.MODE_PRIVATE)
-        if (pref.contains("LoginToken")) {
-            isLogin = true
-        }
-
-        return isLogin
-    }
-
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.imageworld.R
 import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.register.RegisterActivity
@@ -24,9 +25,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         loginBtnSignIn.setOnClickListener {
             val username = loginEtId.text.toString().trim()
             val password = loginEtPassword.text.toString().trim()
-            val token = "dsfag35w467i"
-
-            presenter.signIn(username, password,this@LoginActivity, token)
+            presenter.signIn(username, password)
         }
 
         // Register
@@ -69,6 +68,16 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         loginBtnGoogleSignIn.isEnabled = true
         loginBtnRegister.isEnabled = true
         loginProgressBarLayout.visibility = View.GONE
+    }
+
+    override fun showErrorLogin(e: String?) {
+        var error = "Login failed, please try again..."
+
+        if (e != null) {
+            error = e
+        }
+
+        Toast.makeText(this@LoginActivity, error, Toast.LENGTH_LONG).show()
     }
 
     override fun goToDashboard() {

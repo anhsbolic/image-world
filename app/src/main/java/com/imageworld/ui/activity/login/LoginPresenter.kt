@@ -1,10 +1,10 @@
 package com.imageworld.ui.activity.login
 
-import android.content.Context
 import android.os.Handler
+import com.parse.ParseUser
 
 class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
-    override fun signIn(username: String, password: String, context: Context, token: String) {
+    override fun signIn(username: String, password: String) {
         val isUsernameValid = isUsernameValid(username)
         val isPasswordValid = isPasswordValid(password)
 
@@ -12,14 +12,19 @@ class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
             view.showErrorInput(true,true)
             view.showProgress()
 
-            saveLoginToken(context, token)
-
-            Handler().postDelayed({
-                view.hideProgress()
-                Handler().postDelayed({
-                    view.goToDashboard()
-                },30)
-            },1800)
+            ParseUser.logInInBackground(username, password) { user, e ->
+                if (user != null) {
+                    Handler().postDelayed({
+                        Handler().postDelayed({
+                            view.hideProgress()
+                            view.goToDashboard()
+                        },30)
+                    },1800)
+                } else {
+                    view.hideProgress()
+                    view.showErrorLogin(e.message)
+                }
+            }
         } else {
             view.showErrorInput(isUsernameValid, isPasswordValid)
         }
@@ -30,11 +35,6 @@ class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
 
     override fun register() {
         view.goToRegister()
-    }
-
-    private fun saveLoginToken(context:Context, token: String) {
-        val pref = context.getSharedPreferences("LoginPref", Context.MODE_PRIVATE)
-        pref.edit().putString("LoginToken", token).apply()
     }
 
     private fun isUsernameValid(username: String): Boolean {

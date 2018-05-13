@@ -1,9 +1,8 @@
 package com.imageworld.ui.activity.splashscreen
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import com.imageworld.R
 import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.login.LoginActivity
@@ -24,22 +23,18 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
         presenter = SplashScreenPresenter(this@SplashScreenActivity)
 
         // Check User
-        presenter.checkUser(this@SplashScreenActivity)
+        presenter.checkUser()
     }
 
     override fun goToLogin() {
-        Handler().postDelayed({
-            val intentLogin = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-            startActivity(intentLogin)
-            finish()
-        },2800)
+        val intentLogin = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+        startActivity(intentLogin)
+        finish()
     }
 
     override fun goToDashboard() {
-        Handler().postDelayed({
-            val intentDashboard = Intent(this@SplashScreenActivity, DashboardActivity::class.java)
-            startActivity(intentDashboard)
-            finish()
-        },2800)
+        val intentDashboard = Intent(this@SplashScreenActivity, DashboardActivity::class.java)
+        startActivity(intentDashboard)
+        finish()
     }
 }

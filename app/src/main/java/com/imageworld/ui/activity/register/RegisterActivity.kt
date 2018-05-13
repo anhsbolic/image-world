@@ -1,10 +1,14 @@
 package com.imageworld.ui.activity.register
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.imageworld.R
+import com.imageworld.ui.activity.dashboard.DashboardActivity
 import kotlinx.android.synthetic.main.activity_register.*
+
 
 class RegisterActivity : AppCompatActivity(), RegisterContract.View {
 
@@ -116,8 +120,24 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         registerProgressBarLayout.visibility = View.GONE
     }
 
+    override fun showRegisterError(e: String?) {
+        var error = "Registration failed, please try again..."
+
+        if (e != null) {
+            error = e
+        }
+
+        Toast.makeText(this@RegisterActivity, error, Toast.LENGTH_LONG).show()
+    }
+
     override fun backToLogin() {
         onBackPressed()
+    }
+
+    override fun goToDashboard() {
+        val intentDashboard = Intent(this@RegisterActivity, DashboardActivity::class.java)
+        startActivity(intentDashboard)
+        finishAffinity()
     }
 
 }

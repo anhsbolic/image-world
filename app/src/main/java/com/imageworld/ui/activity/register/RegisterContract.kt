@@ -15,7 +15,11 @@ interface RegisterContract {
 
         fun hideProgress()
 
+        fun showRegisterError(e: String?)
+
         fun backToLogin()
+
+        fun goToDashboard()
     }
 
     interface Presenter {

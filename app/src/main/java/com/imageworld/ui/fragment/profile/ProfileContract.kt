@@ -1,6 +1,5 @@
 package com.imageworld.ui.fragment.profile
 
-import android.content.Context
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 
@@ -16,6 +15,8 @@ interface ProfileContract {
 
         fun setListView(postList: MutableList<Post>)
 
+        fun showErrorLogout(e: String?)
+
         fun goToLogin()
     }
 
@@ -26,7 +27,7 @@ interface ProfileContract {
 
         fun listView()
 
-        fun logout(context: Context)
+        fun logout()
     }
 
 }
