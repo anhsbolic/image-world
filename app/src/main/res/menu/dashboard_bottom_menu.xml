@@ -11,7 +11,7 @@
     <item
         android:id="@+id/nav_camera"
         android:enabled="true"
-        android:icon="@drawable/nav_camera"
+        android:icon="@drawable/nav_add"
         android:title="@string/dashboard_nav_capture"
         app:showAsAction="ifRoom"/>
     <item
