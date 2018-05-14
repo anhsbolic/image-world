@@ -4,11 +4,15 @@ import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 import com.parse.ParseFile
+import com.parse.ParseObject
+import com.parse.ParseQuery
 import com.parse.ParseUser
 
 class ProfilePresenter(private val view : ProfileContract.View) : ProfileContract.Presenter {
 
     private lateinit var username : String
+    private lateinit var urlImgProfile: String
+
     override fun getProfile() {
         val user = ParseUser.getCurrentUser()
         val id = user.objectId
@@ -18,7 +22,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val bio = user.getString("bio")
 
         val file : ParseFile = user.get("image_profile") as ParseFile
-        val urlImgProfile = file.url
+        urlImgProfile = file.url
         val userProfile = UserProfile(
                 id,
                 urlImgProfile,
@@ -32,11 +36,28 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
     override fun gridView() {
         val postList : MutableList<Post> = ArrayList()
 
-        if (postList.isNotEmpty()) {
-            view.hidePlaceholder()
-            view.setGridView(postList)
-        } else {
-            view.showPlaceholder()
+        val user = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
+        query.whereEqualTo("user", user)
+        query.findInBackground { userPosts, e ->
+            if (e == null) {
+                if (userPosts.isNotEmpty()) {
+                    for (userPost in userPosts) {
+                        val objectId = userPost.objectId
+                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgPost = imgFile.url
+                        val caption = userPost.getString("caption")
+
+                        val post = Post(objectId, urlImgProfile, username, imgPost, caption, null)
+                        postList.add(post)
+                    }
+
+                    view.hidePlaceholder()
+                    view.setGridView(postList)
+                } else {
+                    view.showPlaceholder()
+                }
+            }
         }
     }
 

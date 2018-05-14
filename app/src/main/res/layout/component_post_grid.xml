@@ -10,6 +10,7 @@
         android:id="@+id/postGridImg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/colorTextSoftGray"
         android:src="@drawable/img_1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

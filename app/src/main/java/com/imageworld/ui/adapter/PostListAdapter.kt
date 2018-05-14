@@ -29,7 +29,6 @@ class PostListAdapter(private val postList : List<Post>,
         internal var txtUsername: TextView = itemView.postTxtUsername
         internal var btnOptions: ImageButton = itemView.postBtnOption
         internal var imgPost: ImageView = itemView.postImg
-        internal var txtSeenBy: TextView = itemView.postTxtSeenBy
         internal var txtPost: TextView = itemView.postTxtPost
         internal var txtSeeComments: TextView = itemView.postTxtSeeComments
     }
@@ -46,7 +45,6 @@ class PostListAdapter(private val postList : List<Post>,
         Glide.with(mContext).load(postList[position].imageProfile).into(holder.imgProfile)
         holder.txtUsername.text = postList[position].username
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
-//        holder.txtSeenBy.text = postList[position].seenBy
 //        holder.txtPost.text = postList[position].post
 //        val totalComments = postList[position].totalComment
 //        val seeComments = "see $totalComments comments"
