@@ -23,7 +23,7 @@ class HomePresenter(private val view: HomeContract.View) : HomeContract.Presente
                     val lastIndex = userPosts.lastIndex
                     for (userPost in userPosts) {
                         val objectId = userPost.objectId
-                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgFile : ParseFile = userPost.getParseFile("imagePost")
                         val imgPost = imgFile.url
                         val caption = userPost.getString("caption")
 
@@ -36,8 +36,11 @@ class HomePresenter(private val view: HomeContract.View) : HomeContract.Presente
                             if (er == null) {
                                 for (theUser in users) {
                                     val username = theUser.getString("username")
-                                    val imgProfile : ParseFile = theUser.getParseFile("image_profile")
-                                    val urlImgProfile = imgProfile.url
+                                    val imgProfile : ParseFile? = theUser.getParseFile("image_profile")
+                                    var urlImgProfile: String? = null
+                                    if (imgProfile != null) {
+                                        urlImgProfile = imgProfile.url
+                                    }
                                     val post = Post(objectId, urlImgProfile, username, imgPost, caption, null)
                                     postList.add(post)
 

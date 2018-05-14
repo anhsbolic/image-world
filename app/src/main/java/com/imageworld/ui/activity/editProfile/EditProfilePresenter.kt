@@ -47,7 +47,7 @@ class EditProfilePresenter(private val view : EditProfileContract.View) : EditPr
                         when(mode){
                             0 -> {view.goToDashboard()}
                             1 -> {
-                                val file : ParseFile = user.get("image_profile") as ParseFile
+                                val file : ParseFile = user.getParseFile("image_profile")
                                 val urlImgProfile = file.url
                                 val userProfile = UserProfile(user.objectId, urlImgProfile, firstName,
                                         lastName, username, bio)
