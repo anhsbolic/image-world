@@ -34,6 +34,8 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
     }
 
     override fun gridView() {
+        view.showProgress()
+
         val postList : MutableList<Post> = ArrayList()
 
         val user = ParseUser.getCurrentUser()
@@ -52,9 +54,11 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
                         postList.add(post)
                     }
 
+                    view.hideProgress()
                     view.hidePlaceholder()
                     view.setGridView(postList)
                 } else {
+                    view.hideProgress()
                     view.showPlaceholder()
                 }
             }
@@ -62,12 +66,34 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
     }
 
     override fun listView() {
+        view.showProgress()
+
         val postList : MutableList<Post> = ArrayList()
-        if (postList.isNotEmpty()) {
-            view.hidePlaceholder()
-            view.setListView(postList)
-        } else {
-            view.showPlaceholder()
+
+        val user = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
+        query.whereEqualTo("user", user)
+        query.findInBackground { userPosts, e ->
+            if (e == null) {
+                if (userPosts.isNotEmpty()) {
+                    for (userPost in userPosts) {
+                        val objectId = userPost.objectId
+                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgPost = imgFile.url
+                        val caption = userPost.getString("caption")
+
+                        val post = Post(objectId, urlImgProfile, username, imgPost, caption, null)
+                        postList.add(post)
+                    }
+
+                    view.hideProgress()
+                    view.hidePlaceholder()
+                    view.setListView(postList)
+                } else {
+                    view.hideProgress()
+                    view.showPlaceholder()
+                }
+            }
         }
     }
 

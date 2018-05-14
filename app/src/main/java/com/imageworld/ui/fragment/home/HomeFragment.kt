@@ -41,11 +41,7 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun initRecyclerView() {
-        adapterRvPost = PostListAdapter(postList, object : PostListAdapter.OnOptionClickListener {
-            override fun onOptionClick() {
-                Toast.makeText(activity,"OPTIONS",Toast.LENGTH_SHORT).show()
-            }
-        })
+        adapterRvPost = PostListAdapter(postList)
         layoutManagerRvPost = LinearLayoutManager(activity)
         homeRv.adapter = adapterRvPost
         homeRv.layoutManager = layoutManagerRvPost

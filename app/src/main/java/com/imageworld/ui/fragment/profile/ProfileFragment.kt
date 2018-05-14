@@ -144,11 +144,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 spacingInPixels, true, 0)
 
         //List
-        adapterRvPostList = PostListAdapter(postList, object : PostListAdapter.OnOptionClickListener{
-            override fun onOptionClick() {
-                Toast.makeText(activity,"OPTIONS",Toast.LENGTH_SHORT).show()
-            }
-        })
+        adapterRvPostList = PostListAdapter(postList)
         layoutManagerRvPostList = LinearLayoutManager(activity)
 
     }
@@ -165,21 +161,50 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         profileTxtBio.text = bio
     }
 
+    override fun showProgress() {
+        if (profileProgressBar != null) {
+            profileProgressBar.visibility = View.VISIBLE
+        }
+
+        if (profileRvPost != null) {
+            profileRvPost.visibility = View.GONE
+        }
+
+        if (profileTxtPlaceholder != null) {
+            profileTxtPlaceholder.visibility = View.GONE
+        }
+    }
+
+    override fun hideProgress() {
+        if (profileProgressBar != null) {
+            profileProgressBar.visibility = View.GONE
+        }
+    }
+
     override fun showPlaceholder() {
-        profileRvPost.visibility = View.GONE
-        profileTxtPlaceholder.visibility = View.VISIBLE
+        if (profileRvPost != null) {
+            profileRvPost.visibility = View.GONE
+        }
+
+        if (profileTxtPlaceholder != null) {
+            profileTxtPlaceholder.visibility = View.VISIBLE
+        }
     }
 
     override fun hidePlaceholder() {
-        profileTxtPlaceholder.visibility = View.GONE
-        profileRvPost.visibility = View.VISIBLE
+        if (profileTxtPlaceholder != null) {
+            profileTxtPlaceholder.visibility = View.GONE
+        }
+
+        if (profileRvPost != null) {
+            profileRvPost.visibility = View.VISIBLE
+        }
     }
 
     override fun setGridView(postList: MutableList<Post>) {
         profileRvPost.layoutManager = layoutManagerRvPostGrid
         profileRvPost.addItemDecoration(gridItemDecoration)
         profileRvPost.adapter = adapterRvPostGrid
-
 
         if (profileRvPost != null) {
             if (this.postList.isNotEmpty()) {
@@ -210,6 +235,8 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 adapterRvPostList.notifyItemInserted(lastIndex)
             }
         }
+
+        profileMenuList.requestFocus()
     }
 
     override fun showErrorLogout(e: String?) {

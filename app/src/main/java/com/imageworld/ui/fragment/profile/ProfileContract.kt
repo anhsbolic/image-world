@@ -11,6 +11,10 @@ interface ProfileContract {
 
         fun showProfile(profile: UserProfile)
 
+        fun showProgress()
+
+        fun hideProgress()
+
         fun showPlaceholder()
 
         fun hidePlaceholder()
