@@ -40,6 +40,8 @@
     <string name="profile_menu_dialog_exit_message">Are you sure to logout?</string>
     <string name="profile_menu_dialog_exit_positive">Yes</string>
     <string name="profile_menu_dialog_exit_negative">No</string>
+    <string name="profile_placeholder">You don\'t have any posts yet. Let\'s make a post now</string>
+
 
     <!-- EDIT PROFILE -->
     <string name="edit_profile_change_photo">Change Photo</string>

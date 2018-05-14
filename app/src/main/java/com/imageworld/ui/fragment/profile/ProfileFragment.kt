@@ -57,13 +57,29 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         initRecyclerView()
 
         //Init page with grid layout
+        profileMenuList.setImageResource(R.drawable.profile_menu_list_off)
+        profileMenuFilter.setImageResource(R.drawable.profile_menu_filter_off)
+        profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
+        profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_on)
         presenter.gridView()
 
+
         //Grid View
-        profileMenuGrid.setOnClickListener { presenter.gridView() }
+        profileMenuGrid.setOnClickListener {
+            profileMenuList.setImageResource(R.drawable.profile_menu_list_off)
+            profileMenuFilter.setImageResource(R.drawable.profile_menu_filter_off)
+            profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
+            profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_on)
+            presenter.gridView()
+        }
 
         //Lst View
-        profileMenuList.setOnClickListener { presenter.listView() }
+        profileMenuList.setOnClickListener {
+            profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_off)
+            profileMenuFilter.setImageResource(R.drawable.profile_menu_filter_off)
+            profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
+            profileMenuList.setImageResource(R.drawable.profile_menu_list_on)
+            presenter.listView() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -149,12 +165,17 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         profileTxtBio.text = bio
     }
 
-    override fun setGridView(postList: MutableList<Post>) {
-        profileMenuList.setImageResource(R.drawable.profile_menu_list_off)
-        profileMenuFilter.setImageResource(R.drawable.profile_menu_filter_off)
-        profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
-        profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_on)
+    override fun showPlaceholder() {
+        profileRvPost.visibility = View.GONE
+        profileTxtPlaceholder.visibility = View.VISIBLE
+    }
 
+    override fun hidePlaceholder() {
+        profileTxtPlaceholder.visibility = View.GONE
+        profileRvPost.visibility = View.VISIBLE
+    }
+
+    override fun setGridView(postList: MutableList<Post>) {
         profileRvPost.layoutManager = layoutManagerRvPostGrid
         profileRvPost.addItemDecoration(gridItemDecoration)
         profileRvPost.adapter = adapterRvPostGrid
@@ -174,11 +195,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     override fun setListView(postList: MutableList<Post>) {
-        profileMenuGrid.setImageResource(R.drawable.profile_menu_grid_off)
-        profileMenuFilter.setImageResource(R.drawable.profile_menu_filter_off)
-        profileMenuSearch.setImageResource(R.drawable.profile_menu_search_off)
-        profileMenuList.setImageResource(R.drawable.profile_menu_list_on)
-
         profileRvPost.adapter = adapterRvPostList
         profileRvPost.layoutManager = layoutManagerRvPostList
         profileRvPost.removeItemDecoration(gridItemDecoration)

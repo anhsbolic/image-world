@@ -11,6 +11,10 @@ interface ProfileContract {
 
         fun showProfile(profile: UserProfile)
 
+        fun showPlaceholder()
+
+        fun hidePlaceholder()
+
         fun setGridView(postList: MutableList<Post>)
 
         fun setListView(postList: MutableList<Post>)
