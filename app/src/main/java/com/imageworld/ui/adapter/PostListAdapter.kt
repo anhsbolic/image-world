@@ -36,7 +36,12 @@ class PostListAdapter(private val postList : List<Post>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(mContext).load(postList[position].imageProfile).into(holder.imgProfile)
+        val imgProfile = postList[position].imageProfile
+        if (imgProfile != null) {
+            Glide.with(mContext).load(imgProfile).into(holder.imgProfile)
+        } else {
+            Glide.with(mContext).load(R.drawable.ic_img_profile_default).into(holder.imgProfile)
+        }
         holder.txtUsername.text = postList[position].username
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
         holder.txtPostUsername.text = postList[position].username

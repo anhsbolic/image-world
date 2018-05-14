@@ -156,7 +156,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         val username = userProfile.username
         val bio = userProfile.bio
 
-        Glide.with(this@ProfileFragment).load(imgProfile).into(profileImg)
+        if (imgProfile != null) {
+            Glide.with(this@ProfileFragment).load(imgProfile).into(profileImg)
+        } else {
+            Glide.with(this@ProfileFragment).load(R.drawable.ic_img_profile_default).into(profileImg)
+        }
         profileTxtUsername.text = username
         profileTxtBio.text = bio
     }

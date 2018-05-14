@@ -40,7 +40,12 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
     }
 
     override fun updateUi(post: Post) {
-        Glide.with(this@SinglePostActivity).load(post.imageProfile).into(postImgProfile)
+        val imgProfile = post.imageProfile
+        if (imgProfile != null) {
+            Glide.with(this@SinglePostActivity).load(imgProfile).into(postImgProfile)
+        } else {
+            Glide.with(this@SinglePostActivity).load(R.drawable.ic_img_profile_default).into(postImgProfile)
+        }
         postTxtUsername.text = post.username
         Glide.with(this@SinglePostActivity).load(post.imagePost).into(postImg)
         postTxtPostUsername.text = post.username

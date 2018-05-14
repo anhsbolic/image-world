@@ -1,6 +1,5 @@
 package com.imageworld.ui.fragment.profile
 
-import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 import com.parse.ParseFile
@@ -11,7 +10,7 @@ import com.parse.ParseUser
 class ProfilePresenter(private val view : ProfileContract.View) : ProfileContract.Presenter {
 
     private lateinit var username : String
-    private lateinit var urlImgProfile: String
+    private var urlImgProfile: String? = null
 
     override fun getProfile() {
         val user = ParseUser.getCurrentUser()
@@ -21,8 +20,11 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val lastname = user.getString("last_name")
         val bio = user.getString("bio")
 
-        val file : ParseFile = user.get("image_profile") as ParseFile
-        urlImgProfile = file.url
+        val file : ParseFile? = user.getParseFile("image_profile")
+        if (file != null) {
+            urlImgProfile = file.url
+        }
+
         val userProfile = UserProfile(
                 id,
                 urlImgProfile,
@@ -46,7 +48,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
                 if (userPosts.isNotEmpty()) {
                     for (userPost in userPosts) {
                         val objectId = userPost.objectId
-                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgFile : ParseFile = userPost.getParseFile("imagePost")
                         val imgPost = imgFile.url
                         val caption = userPost.getString("caption")
 
@@ -78,7 +80,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
                 if (userPosts.isNotEmpty()) {
                     for (userPost in userPosts) {
                         val objectId = userPost.objectId
-                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgFile : ParseFile = userPost.getParseFile("imagePost")
                         val imgPost = imgFile.url
                         val caption = userPost.getString("caption")
 
