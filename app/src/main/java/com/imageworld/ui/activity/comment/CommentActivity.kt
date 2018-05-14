@@ -1,20 +1,24 @@
 package com.imageworld.ui.activity.comment
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.ActionBar
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.PostComment
 import com.imageworld.model.UserProfile
+import com.imageworld.ui.adapter.CommentAdapter
 import kotlinx.android.synthetic.main.activity_comment.*
 
 class CommentActivity : AppCompatActivity(), CommentContract.View {
 
+    private lateinit var actionBar: ActionBar
     private lateinit var presenter: CommentPresenter
     private lateinit var postId: String
     private lateinit var userProfile: UserProfile
@@ -22,10 +26,20 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
     private var commentList: MutableList<PostComment> = ArrayList()
     private lateinit var adapterRvComment: RecyclerView.Adapter<*>
     private lateinit var layoutManagerRvComment: RecyclerView.LayoutManager
+    private lateinit var dividerItemDecoration: DividerItemDecoration
+    private lateinit var itemAnimator: RecyclerView.ItemAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
+        setSupportActionBar(commentToolbar)
+        commentToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        actionBar = supportActionBar!!
+        actionBar.title = "Comments"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
 
         presenter = CommentPresenter(this@CommentActivity)
 
@@ -33,6 +47,9 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
 
         if (intent.hasExtra(INTENT_POST_ID)) {
             postId = intent.getStringExtra(INTENT_POST_ID)
+
+            // get comment list
+            presenter.getPostCommentList(postId)
         }
 
         // get user data
@@ -54,11 +71,17 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
     }
 
     override fun initRecyclerView() {
-//        adapterRvComment =
-//        layoutManagerRvComment = LinearLayoutManager(this@CommentActivity)
-//        commentRv.adapter = adapterRvComment
-//        commentRv.layoutManager = layoutManagerRvComment
-//        commentRv.setHasFixedSize(false)
+        adapterRvComment = CommentAdapter(commentList)
+        layoutManagerRvComment = LinearLayoutManager(this@CommentActivity)
+        dividerItemDecoration = DividerItemDecoration(this@CommentActivity, DividerItemDecoration.VERTICAL)
+        itemAnimator = DefaultItemAnimator()
+        itemAnimator.addDuration = 300
+        itemAnimator.removeDuration= 300
+        commentRv.adapter = adapterRvComment
+        commentRv.layoutManager = layoutManagerRvComment
+        commentRv.addItemDecoration(dividerItemDecoration)
+        commentRv.itemAnimator = itemAnimator
+        commentRv.setHasFixedSize(false)
     }
 
     override fun showProgress() {
@@ -88,6 +111,12 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
             if (!commentRv.isShown) {
                 commentRv.visibility = View.VISIBLE
             }
+
+            for (i in 0 until postCommentList.size) {
+                commentList.add(postCommentList[i])
+                val lastIndex = commentList.lastIndex
+                adapterRvComment.notifyItemInserted(lastIndex)
+            }
         }
     }
 
@@ -100,7 +129,9 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
     }
 
     override fun showResultPostComment(postComment: PostComment) {
-        Log.d("TES", postComment.toString())
+        commentList.add(0, postComment)
+        adapterRvComment.notifyItemInserted(0)
+        commentRv.smoothScrollToPosition(0)
     }
 
     companion object {

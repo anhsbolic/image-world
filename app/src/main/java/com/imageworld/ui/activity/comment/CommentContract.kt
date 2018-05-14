@@ -23,7 +23,7 @@ interface CommentContract {
     interface Presenter{
         fun getUserData()
 
-        fun getPostCommentList()
+        fun getPostCommentList(postId: String)
 
         fun postComment(postComment: PostComment)
     }

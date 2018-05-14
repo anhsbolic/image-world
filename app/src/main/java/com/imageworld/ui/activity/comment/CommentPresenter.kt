@@ -5,6 +5,7 @@ import com.imageworld.model.PostComment
 import com.imageworld.model.UserProfile
 import com.parse.ParseFile
 import com.parse.ParseObject
+import com.parse.ParseQuery
 import com.parse.ParseUser
 
 class CommentPresenter(private val view: CommentContract.View) : CommentContract.Presenter {
@@ -32,7 +33,35 @@ class CommentPresenter(private val view: CommentContract.View) : CommentContract
         view.setUserData(userProfile)
     }
 
-    override fun getPostCommentList() {
+    override fun getPostCommentList(postId: String) {
+        view.showProgress()
+
+        val commentList: MutableList<PostComment> = ArrayList()
+
+        val query: ParseQuery<ParseObject> = ParseQuery.getQuery("PostComment")
+        query.whereEqualTo("postId", postId)
+        query.findInBackground { comments, e ->
+            if (e == null) {
+                if (comments.isNotEmpty()) {
+                    for (comment in comments) {
+                        val id = comment.objectId
+                        val urlImgProfile = comment.getString("urlImgProfile")
+                        val username  = comment.getString("username")
+                        val content = comment.getString("content")
+
+                        val postComment = PostComment(id, postId, urlImgProfile, username, content)
+                        commentList.add(postComment)
+                    }
+                    view.hideProgress()
+                    view.showCommentList(commentList)
+                } else {
+                    view.hideProgress()
+                    view.showCommentList(commentList)
+                }
+            } else {
+                view.hideProgress()
+            }
+        }
     }
 
     override fun postComment(postComment: PostComment) {
