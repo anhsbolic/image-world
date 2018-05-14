@@ -25,7 +25,7 @@
 
     <!-- DASHBOARD -->
     <string name="dashboard_nav_home">Home</string>
-    <string name="dashboard_nav_capture">Capture</string>
+    <string name="dashboard_nav_capture">Post</string>
     <string name="dashboard_nav_profile">Profile</string>
     <string name="dashboard_title">ImageWorld</string>
     <string name="dashboard_dialog_exit_message">Exit from App?</string>
