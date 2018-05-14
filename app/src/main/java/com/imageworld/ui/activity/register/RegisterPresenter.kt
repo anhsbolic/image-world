@@ -2,6 +2,7 @@ package com.imageworld.ui.activity.register
 
 import android.os.Handler
 import android.util.Patterns
+import com.imageworld.model.UserProfile
 import com.parse.ParseUser
 
 class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Presenter {
@@ -27,7 +28,6 @@ class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Pre
                 view.showProgress()
 
                 val user = ParseUser()
-
                 user.username = username
                 user.email = email
                 user.setPassword(password)
@@ -36,9 +36,18 @@ class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Pre
 
                 user.signUpInBackground { e ->
                     if (e == null) {
+                        val objectId = user.objectId
+
+                        var strLastName: String? = null
+                        if (lastName.isNotEmpty()) {
+                            strLastName = lastName
+                        }
+                        val userProfile = UserProfile(objectId,null,
+                                firstName, strLastName, username,null)
+
                         Handler().postDelayed({
                             view.hideProgress()
-                            view.goToDashboard()
+                            view.goToEditProfilePage(userProfile)
                         }, 1800)
                     } else {
                         view.showRegisterError(e.message)

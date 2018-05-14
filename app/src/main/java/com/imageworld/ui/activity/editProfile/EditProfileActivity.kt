@@ -6,11 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.ActionBar
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,11 +18,7 @@ import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.UserProfile
 import com.imageworld.ui.activity.dashboard.DashboardActivity
-import com.parse.ParseFile
-import com.parse.ParseObject
-import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
@@ -32,6 +27,7 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
     private lateinit var actionBar: ActionBar
     private lateinit var userProfile: UserProfile
     private var mode: Int = 1
+    private var imgProfile: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +38,6 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
         }
         actionBar = supportActionBar!!
         actionBar.title = "Edit Profile"
-//        actionBar.setDisplayHomeAsUpEnabled(true)
-//        actionBar.setDisplayShowHomeEnabled(true)
 
         //Init Presenter
         presenter = EditProfilePresenter(this@EditProfileActivity)
@@ -51,6 +45,10 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
         // Get mode data
         if (intent.hasExtra(INTENT_MODE)) {
             mode = intent.getIntExtra(INTENT_MODE,1)
+            if (mode == MODE_EDIT) {
+                actionBar.setDisplayHomeAsUpEnabled(true)
+                actionBar.setDisplayShowHomeEnabled(true)
+            }
         }
 
         //Get user data
@@ -77,7 +75,11 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
             }
 
             R.id.editProfileMenuSave-> {
-                presenter.saveProfile(mode)
+                val firstName = editProfileEtFirstName.text.toString().trim()
+                val lastName = editProfileEtLastName.text.toString().trim()
+                val username = editProfileEtUsername.text.toString().trim()
+                val bio  = editProfileEtBio.text.toString().trim()
+                presenter.saveProfile(mode, imgProfile, firstName, lastName, username, bio)
                 true
             }
 
@@ -145,18 +147,42 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
             val selectedImage = data.data
 
             try {
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                setImageProfile(bitmap)
+                imgProfile = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
+                setImageProfile(imgProfile)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
 
-    override fun setImageProfile(bitmap: Bitmap) {
+    override fun setImageProfile(bitmap: Bitmap?) {
         Glide.with(this@EditProfileActivity)
                 .load(bitmap)
                 .into(editProfileImg)
+    }
+
+    override fun showErrorInput(isFirstNameValid: Boolean, isUsernameValid: Boolean) {
+        // Username
+        if (!isUsernameValid) {
+            editProfileEtUsernameLayout.isErrorEnabled = true
+            editProfileEtUsernameLayout.error = "require username"
+        } else {
+            editProfileEtUsernameLayout.error = null
+            editProfileEtUsernameLayout.isErrorEnabled = false
+        }
+
+        // FirstName
+        if (!isFirstNameValid) {
+            editProfileEtFirstNameLayout.isErrorEnabled = true
+            editProfileEtFirstNameLayout.error = "require firstname"
+        } else {
+            editProfileEtFirstNameLayout.error = null
+            editProfileEtFirstNameLayout.isErrorEnabled = false
+        }
+    }
+
+    override fun showErrorSaveProfile(e: String) {
+        Toast.makeText(this@EditProfileActivity, e, Toast.LENGTH_LONG).show()
     }
 
     override fun showProgress() {

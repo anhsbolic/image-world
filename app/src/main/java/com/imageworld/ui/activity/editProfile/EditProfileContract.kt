@@ -10,7 +10,12 @@ interface EditProfileContract {
 
         fun showGallery()
 
-        fun setImageProfile(bitmap: Bitmap)
+        fun setImageProfile(bitmap: Bitmap?)
+
+        fun showErrorInput(isFirstNameValid: Boolean,
+                           isUsernameValid: Boolean)
+
+        fun showErrorSaveProfile(e: String)
 
         fun showProgress()
 
@@ -24,6 +29,7 @@ interface EditProfileContract {
     interface Presenter {
         fun changePhoto()
 
-        fun saveProfile(mode: Int)
+        fun saveProfile(mode: Int, imgProfile: Bitmap?, firstName: String, lastName: String,
+                        username: String, bio: String)
     }
 }

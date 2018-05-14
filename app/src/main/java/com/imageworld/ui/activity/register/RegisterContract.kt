@@ -1,5 +1,7 @@
 package com.imageworld.ui.activity.register
 
+import com.imageworld.model.UserProfile
+
 interface RegisterContract {
 
     interface View {
@@ -19,7 +21,8 @@ interface RegisterContract {
 
         fun backToLogin()
 
-        fun goToDashboard()
+        fun goToEditProfilePage(userProfile: UserProfile)
+
     }
 
     interface Presenter {

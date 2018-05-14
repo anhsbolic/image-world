@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.imageworld.R
-import com.imageworld.ui.activity.dashboard.DashboardActivity
+import com.imageworld.model.UserProfile
+import com.imageworld.ui.activity.editProfile.EditProfileActivity
 import kotlinx.android.synthetic.main.activity_register.*
-
 
 class RegisterActivity : AppCompatActivity(), RegisterContract.View {
 
@@ -76,7 +76,7 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         }
 
         // FirstName
-        if (!isUsernameValid) {
+        if (!isFirstNameValid) {
             registerEtFirstNameLayout.isErrorEnabled = true
             registerEtFirstNameLayout.error = "require firstname"
         } else {
@@ -134,9 +134,11 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         onBackPressed()
     }
 
-    override fun goToDashboard() {
-        val intentDashboard = Intent(this@RegisterActivity, DashboardActivity::class.java)
-        startActivity(intentDashboard)
+    override fun goToEditProfilePage(userProfile: UserProfile) {
+        val intentEditProfile = Intent(this@RegisterActivity, EditProfileActivity::class.java)
+        intentEditProfile.putExtra(EditProfileActivity.INTENT_MODE, EditProfileActivity.MODE_FIRST_EDIT)
+        intentEditProfile.putExtra(EditProfileActivity.INTENT_USER, userProfile)
+        startActivity(intentEditProfile)
         finishAffinity()
     }
 
