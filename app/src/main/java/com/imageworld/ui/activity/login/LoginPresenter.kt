@@ -15,11 +15,11 @@ class LoginPresenter(val view : LoginContract.View) : LoginContract.Presenter {
             ParseUser.logInInBackground(username, password) { user, e ->
                 if (user != null) {
                     Handler().postDelayed({
+                        view.hideProgress()
                         Handler().postDelayed({
-                            view.hideProgress()
                             view.goToDashboard()
-                        },30)
-                    },1800)
+                        },500)
+                    },800)
                 } else {
                     view.hideProgress()
                     view.showErrorLogin(e.message)

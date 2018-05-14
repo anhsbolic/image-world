@@ -47,9 +47,12 @@ class RegisterPresenter(val view : RegisterContract.View) : RegisterContract.Pre
 
                         Handler().postDelayed({
                             view.hideProgress()
-                            view.goToEditProfilePage(userProfile)
-                        }, 1800)
+                            Handler().postDelayed({
+                                view.goToEditProfilePage(userProfile)
+                            },500)
+                        }, 800)
                     } else {
+                        view.hideProgress()
                         view.showRegisterError(e.message)
                     }
                 }

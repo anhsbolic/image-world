@@ -44,17 +44,19 @@ class EditProfilePresenter(private val view : EditProfileContract.View) : EditPr
                 if (e == null) {
                     Handler().postDelayed({
                         view.hideProgress()
-                        when(mode){
-                            0 -> {view.goToDashboard()}
-                            1 -> {
-                                val file : ParseFile = user.getParseFile("image_profile")
-                                val urlImgProfile = file.url
-                                val userProfile = UserProfile(user.objectId, urlImgProfile, firstName,
-                                        lastName, username, bio)
-                                view.showEditProfileResult(userProfile)
+                        Handler().postDelayed({
+                            when(mode){
+                                0 -> {view.goToDashboard()}
+                                1 -> {
+                                    val file : ParseFile = user.getParseFile("image_profile")
+                                    val urlImgProfile = file.url
+                                    val userProfile = UserProfile(user.objectId, urlImgProfile, firstName,
+                                            lastName, username, bio)
+                                    view.showEditProfileResult(userProfile)
+                                }
                             }
-                        }
-                    },1800)
+                        }, 500)
+                    },800)
                 } else {
                     view.hideProgress()
                     view.showErrorSaveProfile(e.message!!)

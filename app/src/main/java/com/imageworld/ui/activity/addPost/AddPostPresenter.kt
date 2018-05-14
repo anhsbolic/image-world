@@ -33,9 +33,11 @@ class AddPostPresenter(private val view: AddPostContract.View) : AddPostContract
         post.saveInBackground { e ->
             if (e == null) {
                 Handler().postDelayed({
-                    view.hideProgress()
+                    Handler().postDelayed({
+                        view.hideProgress()
+                    },500)
                     view.goToProfile()
-                },1800)
+                },800)
             } else {
                 Handler().postDelayed({
                     view.hideProgress()
