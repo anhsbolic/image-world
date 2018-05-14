@@ -21,7 +21,7 @@ interface EditProfileContract {
 
         fun hideProgress()
 
-        fun showEditProfileResult()
+        fun showEditProfileResult(userProfile: UserProfile)
 
         fun goToDashboard()
     }

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.UserProfile
 import com.imageworld.ui.activity.dashboard.DashboardActivity
+import com.imageworld.ui.fragment.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import java.io.IOException
 
@@ -204,7 +205,11 @@ class EditProfileActivity : AppCompatActivity(), EditProfileContract.View {
     }
 
 
-    override fun showEditProfileResult() {
+    override fun showEditProfileResult(userProfile: UserProfile) {
+        val intentEditProfileSuccess = Intent()
+        intentEditProfileSuccess.putExtra(ProfileFragment.INTENT_EDIT_SUCCESS_DATA, userProfile)
+        setResult(ProfileFragment.INTENT_EDIT_SUCCESS, intentEditProfileSuccess )
+        finish()
     }
 
     override fun goToDashboard() {

@@ -2,6 +2,7 @@ package com.imageworld.ui.activity.editProfile
 
 import android.graphics.Bitmap
 import android.os.Handler
+import com.imageworld.model.UserProfile
 import com.parse.ParseFile
 import com.parse.ParseUser
 import java.io.ByteArrayOutputStream
@@ -45,7 +46,13 @@ class EditProfilePresenter(private val view : EditProfileContract.View) : EditPr
                         view.hideProgress()
                         when(mode){
                             0 -> {view.goToDashboard()}
-                            1 -> {view.showEditProfileResult()}
+                            1 -> {
+                                val file : ParseFile = user.get("image_profile") as ParseFile
+                                val urlImgProfile = file.url
+                                val userProfile = UserProfile(user.objectId, urlImgProfile, firstName,
+                                        lastName, username, bio)
+                                view.showEditProfileResult(userProfile)
+                            }
                         }
                     },1800)
                 } else {

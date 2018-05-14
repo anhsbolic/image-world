@@ -15,6 +15,7 @@ import com.imageworld.helper.GridSpacingItemDecoration
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
 import com.imageworld.ui.activity.dashboard.DashboardActivity
+import com.imageworld.ui.activity.editProfile.EditProfileActivity
 import com.imageworld.ui.activity.login.LoginActivity
 import com.imageworld.ui.activity.singlePost.SinglePostActivity
 import com.imageworld.ui.adapter.PostGridAdapter
@@ -73,11 +74,10 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item!!.itemId) {
             R.id.menu_update->{
-                Toast.makeText(activity,"UPDATE",Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.menu_settings->{
-                Toast.makeText(activity,"SETTINGS",Toast.LENGTH_SHORT).show()
+                val intentEditProfile = Intent(activity, EditProfileActivity::class.java)
+                intentEditProfile.putExtra(EditProfileActivity.INTENT_MODE, EditProfileActivity.MODE_EDIT)
+                intentEditProfile.putExtra(EditProfileActivity.INTENT_USER, userProfile)
+                startActivityForResult(intentEditProfile, INTENT_EDIT)
                 true
             }
             R.id.menu_logout->{
@@ -93,6 +93,23 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             else -> {
                 super.onOptionsItemSelected(item)
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when(requestCode) {
+            INTENT_EDIT -> {
+                when(resultCode) {
+                    INTENT_EDIT_SUCCESS -> {
+                        if (data != null) {
+                            val updatedProfile: UserProfile = data.getParcelableExtra(INTENT_EDIT_SUCCESS_DATA)
+                            showProfile(updatedProfile)
+                        }
+                    }
+                }
+            }
+
+            else -> {super.onActivityResult(requestCode, resultCode, data)}
         }
     }
 
@@ -196,6 +213,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     companion object {
+
+        const val INTENT_EDIT : Int = 20
+        const val INTENT_EDIT_SUCCESS : Int = 21
+        const val INTENT_EDIT_SUCCESS_DATA = "UpdatedProfileData"
+
 
         @JvmStatic
         fun newInstance() =

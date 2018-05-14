@@ -6,9 +6,6 @@
     <item android:id="@+id/menu_update"
         android:title="@string/profile_menu_update"
         app:showAsAction="never"/>
-    <item android:id="@+id/menu_settings"
-        android:title="@string/profile_menu_settings"
-        app:showAsAction="never"/>
     <item android:id="@+id/menu_logout"
         android:title="@string/profile_menu_logout"
         app:showAsAction="never"/>
