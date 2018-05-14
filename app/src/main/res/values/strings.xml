@@ -56,4 +56,7 @@
     <string name="add_post_caption">Caption</string>
     <string name="add_post_save">SAVE</string>
 
+    <!-- HOME -->
+    <string name="home_placeholder">There is no post yet</string>
+
 </resources>

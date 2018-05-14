@@ -6,6 +6,14 @@ interface HomeContract {
     interface View {
         fun initRecyclerView()
 
+        fun showProgress()
+
+        fun hideProgress()
+
+        fun showPlaceholder()
+
+        fun hidePlaceholder()
+
         fun showPostList(postList: MutableList<Post>)
     }
 

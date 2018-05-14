@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.ui.adapter.PostListAdapter
@@ -46,6 +45,46 @@ class HomeFragment : Fragment(), HomeContract.View {
         homeRv.adapter = adapterRvPost
         homeRv.layoutManager = layoutManagerRvPost
         homeRv.setHasFixedSize(false)
+    }
+
+    override fun showProgress() {
+        if (homeProgressBar != null) {
+            homeProgressBar.visibility = View.VISIBLE
+        }
+
+        if (homeRv != null) {
+            homeRv.visibility = View.GONE
+        }
+
+        if (homeTxtPlaceholder != null) {
+            homeTxtPlaceholder.visibility = View.GONE
+        }
+    }
+
+    override fun hideProgress() {
+        if (homeProgressBar != null) {
+            homeProgressBar.visibility = View.GONE
+        }
+    }
+
+    override fun showPlaceholder() {
+        if (homeRv != null) {
+            homeRv.visibility = View.GONE
+        }
+
+        if (homeTxtPlaceholder != null) {
+            homeTxtPlaceholder.visibility = View.VISIBLE
+        }
+    }
+
+    override fun hidePlaceholder() {
+        if (homeTxtPlaceholder != null) {
+            homeTxtPlaceholder.visibility = View.GONE
+        }
+
+        if (homeRv != null) {
+            homeRv.visibility = View.VISIBLE
+        }
     }
 
     override fun showPostList(postList: MutableList<Post>) {

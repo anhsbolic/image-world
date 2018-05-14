@@ -1,78 +1,64 @@
 package com.imageworld.ui.fragment.home
 
-import com.imageworld.R
+import android.os.Handler
 import com.imageworld.model.Post
+import com.parse.ParseFile
+import com.parse.ParseObject
+import com.parse.ParseQuery
+import com.parse.ParseUser
 
 class HomePresenter(private val view: HomeContract.View) : HomeContract.Presenter {
 
     override fun loadPostListData() {
-//        val post1 = Post(
-//                1,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_1,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post2 = Post(
-//                2,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_2,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post3 = Post(
-//                3,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_3,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post4 = Post(
-//                4,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_4,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post5 = Post(
-//                5,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_5,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post6 = Post(
-//                6,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_6,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
-//        val post7 = Post(
-//                7,
-//                R.drawable.img_profil_1,
-//                "jacksparrow",
-//                R.drawable.img_7,
-//                "Dude, Jodi, Dean, and others",
-//                "yeah dude. it is all about PASSION....",
-//                3952)
+        view.showProgress()
 
         val postList : MutableList<Post> = ArrayList()
-//        postList.add(post1)
-//        postList.add(post2)
-//        postList.add(post3)
-//        postList.add(post4)
-//        postList.add(post5)
-//        postList.add(post6)
-//        postList.add(post7)
 
-        view.showPostList(postList)
+        val user = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
+        query.whereNotEqualTo("user", user)
+        query.findInBackground { userPosts, e ->
+            if (e == null) {
+                if (userPosts.isNotEmpty()) {
+                    val lastIndex = userPosts.lastIndex
+                    for (userPost in userPosts) {
+                        val objectId = userPost.objectId
+                        val imgFile : ParseFile = userPost.get("imagePost") as ParseFile
+                        val imgPost = imgFile.url
+                        val caption = userPost.getString("caption")
+
+                        val userhavePost: ParseUser = userPost.getParseUser("user")
+                        val userhavePostId = userhavePost.objectId
+
+                        val queryUser: ParseQuery<ParseObject> = ParseQuery.getQuery("_User")
+                        queryUser.whereEqualTo("objectId", userhavePostId)
+                        queryUser.findInBackground { users, er ->
+                            if (er == null) {
+                                for (theUser in users) {
+                                    val username = theUser.getString("username")
+                                    val imgProfile : ParseFile = theUser.getParseFile("image_profile")
+                                    val urlImgProfile = imgProfile.url
+                                    val post = Post(objectId, urlImgProfile, username, imgPost, caption, null)
+                                    postList.add(post)
+
+                                    if (postList.lastIndex == lastIndex) {
+                                        Handler().postDelayed({
+                                            view.hideProgress()
+                                            view.hidePlaceholder()
+                                            view.showPostList(postList)
+                                        },1800)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    Handler().postDelayed({
+                        view.hideProgress()
+                        view.showPlaceholder()
+                    },1800)
+                }
+            }
+        }
     }
-
 }
