@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.imageworld.R
+import com.imageworld.ui.activity.addPost.AddPostActivity
 import com.imageworld.ui.fragment.home.HomeFragment
 import com.imageworld.ui.fragment.profile.ProfileFragment
 import com.parse.ParseFile
@@ -72,15 +73,18 @@ class DashboardActivity : AppCompatActivity() {
                 currentFragment = HomeFragment()
             }
             R.id.nav_camera->{
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-                    } else {
-                        getPhoto()
-                    }
-                } else {
-                    getPhoto()
-                }
+                goToAddPost()
+
+
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+//                    } else {
+//                        getPhoto()
+//                    }
+//                } else {
+//                    getPhoto()
+//                }
             }
             R.id.nav_profile->{
                 currentFragment = ProfileFragment()
@@ -121,6 +125,11 @@ class DashboardActivity : AppCompatActivity() {
                     .setNegativeButton(R.string.dashboard_dialog_exit_negative, null)
                     .show()
         }
+    }
+
+    private fun goToAddPost(){
+        val intentAddPost = Intent(this@DashboardActivity, AddPostActivity::class.java)
+        startActivity(intentAddPost)
     }
 
     // Photo

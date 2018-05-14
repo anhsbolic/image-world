@@ -50,4 +50,9 @@
     <string name="edit_profile_username">Username</string>
     <string name="edit_profile_bio">Bio</string>
     <string name="edit_profile_save">SAVE</string>
+
+    <!-- ADD POST -->
+    <string name="add_post_change_photo">Change Photo</string>
+    <string name="add_post_caption">Caption</string>
+
 </resources>
