@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_image_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_chat_bubble_outline_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,12 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="676767" />
-                            <entry key="height" value="400" />
-                            <entry key="outputName" value="ic_image_placeholder" />
+                            <entry key="color" value="2f2f2f" />
+                            <entry key="outputName" value="ic_comment" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\anhar\Pictures\googleicon.svg" />
-                            <entry key="width" value="400" />
                           </map>
                         </option>
                       </PersistentState>

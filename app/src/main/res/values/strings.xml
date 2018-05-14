@@ -42,7 +42,6 @@
     <string name="profile_menu_dialog_exit_negative">No</string>
     <string name="profile_placeholder">You don\'t have any posts yet. Let\'s make a post now</string>
 
-
     <!-- EDIT PROFILE -->
     <string name="edit_profile_change_photo">Change Photo</string>
     <string name="edit_profile_first_name">First Name</string>
@@ -58,5 +57,10 @@
 
     <!-- HOME -->
     <string name="home_placeholder">There is no post yet</string>
+
+    <!-- POST -->
+    <string name="post_comment">comment</string>
+    <string name="comment_add_a_comment">Add a comment ..</string>
+    <string name="comment_post">Post</string>
 
 </resources>

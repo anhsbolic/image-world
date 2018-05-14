@@ -13,15 +13,21 @@ import com.imageworld.model.Post
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.component_post.view.*
 
-class PostListAdapter(private val postList : List<Post>)
+class PostListAdapter(private val postList : List<Post>,
+                      private val onCommentClickListener: PostListAdapter.OnCommentClickListener)
     : RecyclerView.Adapter<PostListAdapter.ViewHolder>(){
 
     private lateinit var mContext: Context
+
+    interface OnCommentClickListener{
+        fun onCommentClick(postId: String)
+    }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         internal var imgProfile: CircleImageView = itemView.postImgProfile
         internal var txtUsername: TextView = itemView.postTxtUsername
         internal var imgPost: ImageView = itemView.postImg
+        internal var txtComment: TextView = itemView.postComment
         internal var txtPostUsername: TextView = itemView.postTxtPostUsername
         internal var txtPost: TextView = itemView.postTxtPost
         internal var txtSeeComments: TextView = itemView.postTxtSeeComments
@@ -49,6 +55,11 @@ class PostListAdapter(private val postList : List<Post>)
 //        val totalComments = postList[position].totalComment
 //        val seeComments = "see $totalComments comments"
 //        holder.txtSeeComments.text = seeComments
+
+        holder.txtComment.setOnClickListener {
+            val postId = postList[holder.adapterPosition].id!!
+            onCommentClickListener.onCommentClick(postId)
+        }
     }
 
     override fun getItemCount(): Int {

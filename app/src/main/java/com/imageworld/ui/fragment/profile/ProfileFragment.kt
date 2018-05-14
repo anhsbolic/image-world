@@ -14,6 +14,7 @@ import com.imageworld.R
 import com.imageworld.helper.GridSpacingItemDecoration
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
+import com.imageworld.ui.activity.comment.CommentActivity
 import com.imageworld.ui.activity.dashboard.DashboardActivity
 import com.imageworld.ui.activity.editProfile.EditProfileActivity
 import com.imageworld.ui.activity.login.LoginActivity
@@ -144,7 +145,13 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 spacingInPixels, true, 0)
 
         //List
-        adapterRvPostList = PostListAdapter(postList)
+        adapterRvPostList = PostListAdapter(postList, object : PostListAdapter.OnCommentClickListener{
+            override fun onCommentClick(postId: String) {
+                val intentComment = Intent(activity, CommentActivity::class.java)
+                intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+                startActivity(intentComment)
+            }
+        })
         layoutManagerRvPostList = LinearLayoutManager(activity)
 
     }

@@ -1,11 +1,13 @@
 package com.imageworld.ui.activity.singlePost
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBar
 import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.Post
+import com.imageworld.ui.activity.comment.CommentActivity
 import kotlinx.android.synthetic.main.activity_single_post.*
 import kotlinx.android.synthetic.main.component_post.*
 
@@ -36,6 +38,14 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
 
             // Update UI
             presenter.setPostData(post)
+        }
+
+        // PostComment
+        postComment.setOnClickListener {
+            val postId = post.id!!
+            val intentComment = Intent(this@SinglePostActivity, CommentActivity::class.java)
+            intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+            startActivity(intentComment)
         }
     }
 

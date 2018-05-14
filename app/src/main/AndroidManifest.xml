@@ -68,6 +68,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Themes.Custom.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".ui.activity.comment.CommentActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Themes.Custom.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
     </application>
 
 </manifest>

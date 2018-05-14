@@ -1,5 +1,6 @@
 package com.imageworld.ui.fragment.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.imageworld.R
 import com.imageworld.model.Post
+import com.imageworld.ui.activity.comment.CommentActivity
 import com.imageworld.ui.adapter.PostListAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -40,7 +42,13 @@ class HomeFragment : Fragment(), HomeContract.View {
     }
 
     override fun initRecyclerView() {
-        adapterRvPost = PostListAdapter(postList)
+        adapterRvPost = PostListAdapter(postList, object : PostListAdapter.OnCommentClickListener{
+            override fun onCommentClick(postId: String) {
+                val intentComment = Intent(activity, CommentActivity::class.java)
+                intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+                startActivity(intentComment)
+            }
+        })
         layoutManagerRvPost = LinearLayoutManager(activity)
         homeRv.adapter = adapterRvPost
         homeRv.layoutManager = layoutManagerRvPost
