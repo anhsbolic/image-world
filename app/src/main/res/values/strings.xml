@@ -54,5 +54,6 @@
     <!-- ADD POST -->
     <string name="add_post_change_photo">Change Photo</string>
     <string name="add_post_caption">Caption</string>
+    <string name="add_post_save">SAVE</string>
 
 </resources>

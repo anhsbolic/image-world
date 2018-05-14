@@ -1,31 +1,21 @@
 package com.imageworld.ui.activity.dashboard
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import com.imageworld.R
 import com.imageworld.ui.activity.addPost.AddPostActivity
 import com.imageworld.ui.fragment.home.HomeFragment
 import com.imageworld.ui.fragment.profile.ProfileFragment
-import com.parse.ParseFile
-import com.parse.ParseObject
-import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import java.io.ByteArrayOutputStream
-import java.io.IOException
 
 
 class DashboardActivity : AppCompatActivity() {
@@ -58,7 +48,16 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        displaySelectedScreen(R.id.nav_home)
+        if (intent.hasExtra(NAV_TO_PROFILE)) {
+            val isNavToProfile = intent.getBooleanExtra(NAV_TO_PROFILE,false)
+            if (isNavToProfile) {
+                displaySelectedScreen(R.id.nav_profile)
+            } else {
+                displaySelectedScreen(R.id.nav_home)
+            }
+        } else {
+            displaySelectedScreen(R.id.nav_home)
+        }
 
         dashboardBottomNav.setOnNavigationItemSelectedListener {item: MenuItem ->
             displaySelectedScreen(item.itemId)
@@ -73,18 +72,15 @@ class DashboardActivity : AppCompatActivity() {
                 currentFragment = HomeFragment()
             }
             R.id.nav_camera->{
-                goToAddPost()
-
-
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-//                    } else {
-//                        getPhoto()
-//                    }
-//                } else {
-//                    getPhoto()
-//                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                    } else {
+                        goToAddPost()
+                    }
+                } else {
+                    goToAddPost()
+                }
             }
             R.id.nav_profile->{
                 currentFragment = ProfileFragment()
@@ -127,54 +123,22 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToAddPost(){
-        val intentAddPost = Intent(this@DashboardActivity, AddPostActivity::class.java)
-        startActivity(intentAddPost)
-    }
-
-    // Photo
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == 1) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getPhoto()
+                goToAddPost()
             }
         }
     }
 
-    private fun getPhoto() {
-        val intentPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intentPhoto, 1)
+    private fun goToAddPost(){
+        val intentAddPost = Intent(this@DashboardActivity, AddPostActivity::class.java)
+        startActivity(intentAddPost)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-
-            val selectedImage = data.data
-
-            try {
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                Log.i("Photo", "Received")
-                val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                val byteArray = stream.toByteArray()
-                val file = ParseFile("image.png", byteArray)
-                val imageObject= ParseObject("Image")
-                imageObject.put("image", file)
-                imageObject.put("username", ParseUser.getCurrentUser().username)
-                imageObject.saveInBackground { e ->
-                    if (e == null) {
-                        Toast.makeText(this@DashboardActivity, "Image Shared!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@DashboardActivity, "Image could not be shared - please try again later.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
+    companion object {
+        const val NAV_TO_PROFILE = "NavToProfile"
     }
 }

@@ -43,11 +43,11 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
         Glide.with(this@SinglePostActivity).load(post.imageProfile).into(postImgProfile)
         postTxtUsername.text = post.username
         Glide.with(this@SinglePostActivity).load(post.imagePost).into(postImg)
-        postTxtSeenBy.text = post.seenBy
-        postTxtPost.text = post.post
-        val totalComments = post.totalComment
-        val seeComments = "see $totalComments comments"
-        postTxtSeeComments.text = seeComments
+//        postTxtSeenBy.text = post.seenBy
+//        postTxtPost.text = post.post
+//        val totalComments = post.totalComment
+//        val seeComments = "see $totalComments comments"
+//        postTxtSeeComments.text = seeComments
     }
 
     companion object {

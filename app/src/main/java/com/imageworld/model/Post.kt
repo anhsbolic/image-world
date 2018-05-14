@@ -6,10 +6,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-data class Post(var id: Int,
-                var imageProfile: Int,
-                var username: String,
-                var imagePost: Int,
-                var seenBy: String,
-                var post: String,
-                var totalComment: Int) : Parcelable
+data class Post(var id: String?,
+                var imageProfile: String?,
+                var username: String?,
+                var imagePost: String?,
+                var capture: String?,
+                var listComments: List<String>?) : Parcelable

@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@android:color/white"
-                    android:src="@drawable/ic_image_placeholder"
+                    android:scaleType="centerCrop"
                     tools:ignore="ContentDescription"
                     app:layout_constraintDimensionRatio="4:3"
                     app:layout_constraintTop_toTopOf="parent"
