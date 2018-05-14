@@ -43,8 +43,8 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
         Glide.with(this@SinglePostActivity).load(post.imageProfile).into(postImgProfile)
         postTxtUsername.text = post.username
         Glide.with(this@SinglePostActivity).load(post.imagePost).into(postImg)
-        val caption = post.caption
-        postTxtPost.text = caption
+        postTxtPostUsername.text = post.username
+        postTxtPost.text = post.caption
     }
 
     companion object {

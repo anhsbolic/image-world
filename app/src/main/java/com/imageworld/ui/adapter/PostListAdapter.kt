@@ -22,6 +22,7 @@ class PostListAdapter(private val postList : List<Post>)
         internal var imgProfile: CircleImageView = itemView.postImgProfile
         internal var txtUsername: TextView = itemView.postTxtUsername
         internal var imgPost: ImageView = itemView.postImg
+        internal var txtPostUsername: TextView = itemView.postTxtPostUsername
         internal var txtPost: TextView = itemView.postTxtPost
         internal var txtSeeComments: TextView = itemView.postTxtSeeComments
     }
@@ -38,6 +39,7 @@ class PostListAdapter(private val postList : List<Post>)
         Glide.with(mContext).load(postList[position].imageProfile).into(holder.imgProfile)
         holder.txtUsername.text = postList[position].username
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
+        holder.txtPostUsername.text = postList[position].username
         holder.txtPost.text = postList[position].caption
 //        val totalComments = postList[position].totalComment
 //        val seeComments = "see $totalComments comments"
