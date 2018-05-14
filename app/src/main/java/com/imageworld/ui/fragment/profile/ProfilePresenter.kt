@@ -1,26 +1,51 @@
 package com.imageworld.ui.fragment.profile
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.imageworld.R
 import com.imageworld.model.Post
 import com.imageworld.model.UserProfile
+import com.parse.ParseFile
 import com.parse.ParseUser
+
 
 class ProfilePresenter(private val view : ProfileContract.View) : ProfileContract.Presenter {
 
     private lateinit var username : String
+    private var imgProfile : Bitmap? = null
 
     override fun getProfile() {
         val user = ParseUser.getCurrentUser()
         val id = user.objectId
         username = user.username
-        val fisrtname = user.getString("first_name")
-        val userProfile = UserProfile(id,
-                "sadfsgdh",
-                "asdf",
-                "sdafsg",
-                username,
-                "Hi friends!, it me...... Let's make good memories together")
-        view.showProfile(userProfile)
+        val firstname = user.getString("first_name")
+        val lastname = user.getString("last_name")
+        val bio = user.getString("bio")
+
+        val file : ParseFile = user.get("image_profile") as ParseFile
+        file.getDataInBackground { data, e ->
+            if (e == null && data != null) {
+                imgProfile = BitmapFactory.decodeByteArray(data, 0, data.size)
+                val userProfile = UserProfile(
+                        id,
+                        imgProfile,
+                        firstname,
+                        lastname,
+                        username,
+                        bio)
+                view.showProfile(userProfile)
+            } else {
+                imgProfile = null
+                val userProfile = UserProfile(
+                        id,
+                        imgProfile,
+                        firstname,
+                        lastname,
+                        username,
+                        bio)
+                view.showProfile(userProfile)
+            }
+        }
     }
 
     override fun gridView() {
