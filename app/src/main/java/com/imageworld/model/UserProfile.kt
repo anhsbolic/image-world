@@ -6,7 +6,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Keep
 @Parcelize
-class UserProfile(var id: Int,
-                  var imageProfile: Int,
-                  var username: String,
-                  var bio: String) : Parcelable
+class UserProfile(var id: String?,
+                  var imageProfile: String?,
+                  var firstName: String?,
+                  var lastName: String?,
+                  var username: String?,
+                  var bio: String?) : Parcelable

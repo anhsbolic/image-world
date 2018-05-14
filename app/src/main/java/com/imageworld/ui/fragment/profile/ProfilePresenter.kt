@@ -14,8 +14,10 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val id = user.objectId
         username = user.username
         val fisrtname = user.getString("first_name")
-        val userProfile = UserProfile(1,
-                R.drawable.img_profil_1,
+        val userProfile = UserProfile(id,
+                "sadfsgdh",
+                "asdf",
+                "sdafsg",
                 username,
                 "Hi friends!, it me...... Let's make good memories together")
         view.showProfile(userProfile)

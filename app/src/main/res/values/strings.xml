@@ -40,4 +40,12 @@
     <string name="profile_menu_dialog_exit_message">Are you sure to logout?</string>
     <string name="profile_menu_dialog_exit_positive">Yes</string>
     <string name="profile_menu_dialog_exit_negative">No</string>
+
+    <!-- EDIT PROFILE -->
+    <string name="edit_profile_change_photo">Change Photo</string>
+    <string name="edit_profile_first_name">First Name</string>
+    <string name="edit_profile_last_name">Last Name</string>
+    <string name="edit_profile_username">Username</string>
+    <string name="edit_profile_bio">Bio</string>
+    <string name="edit_profile_save">SAVE</string>
 </resources>

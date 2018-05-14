@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.imageworld.R
+import com.imageworld.model.UserProfile
 import com.imageworld.ui.activity.dashboard.DashboardActivity
+import com.imageworld.ui.activity.editProfile.EditProfileActivity
 import com.imageworld.ui.activity.login.LoginActivity
 import com.parse.ParseAnalytics
 
@@ -27,9 +29,17 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     }
 
     override fun goToLogin() {
-        val intentLogin = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+        val userProfile = UserProfile("asdsfgd",
+                null,
+                "asdf",
+                null,
+                "safdsg",
+                "Hi friends!, it me...... Let's make good memories together")
+        val intentLogin = Intent(this@SplashScreenActivity, EditProfileActivity::class.java)
+        intentLogin.putExtra(EditProfileActivity.INTENT_USER,userProfile)
         startActivity(intentLogin)
         finish()
+        //TODO : CHANGE TO LOGIN
     }
 
     override fun goToDashboard() {
