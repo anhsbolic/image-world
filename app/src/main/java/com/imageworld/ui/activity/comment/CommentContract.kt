@@ -25,6 +25,6 @@ interface CommentContract {
 
         fun getPostCommentList(postId: String)
 
-        fun postComment(postComment: PostComment)
+        fun postComment(postComment: PostComment, totalComments: Int)
     }
 }

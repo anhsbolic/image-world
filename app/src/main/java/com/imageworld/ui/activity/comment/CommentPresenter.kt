@@ -3,10 +3,7 @@ package com.imageworld.ui.activity.comment
 import android.os.Handler
 import com.imageworld.model.PostComment
 import com.imageworld.model.UserProfile
-import com.parse.ParseFile
-import com.parse.ParseObject
-import com.parse.ParseQuery
-import com.parse.ParseUser
+import com.parse.*
 
 class CommentPresenter(private val view: CommentContract.View) : CommentContract.Presenter {
     override fun getUserData() {
@@ -64,7 +61,7 @@ class CommentPresenter(private val view: CommentContract.View) : CommentContract
         }
     }
 
-    override fun postComment(postComment: PostComment) {
+    override fun postComment(postComment: PostComment, totalComments: Int) {
         view.showProgress()
 
         val postId = postComment.postId
@@ -82,10 +79,39 @@ class CommentPresenter(private val view: CommentContract.View) : CommentContract
         //Save Post
         comment.saveInBackground { e ->
             if (e == null) {
-                val id = comment.objectId
-                postComment.id = id
-                view.hideProgress()
-                view.showResultPostComment(postComment)
+
+                val query = ParseQuery.getQuery<ParseObject>("UserPost")
+                query.getInBackground(postId) { userPost, er ->
+                    if (er == null) {
+                        if (userPost != null) {
+                            val updateTotalComments = totalComments + 1
+                            userPost.put("totalComments", updateTotalComments)
+                            userPost.saveInBackground{error ->
+                                if (error == null) {
+                                    val id = comment.objectId
+                                    postComment.id = id
+                                    view.hideProgress()
+                                    view.showResultPostComment(postComment)
+                                } else {
+                                    Handler().postDelayed({
+                                        view.hideProgress()
+                                        view.showAddPostError(error.message)
+                                    },800)
+                                }
+                            }
+                        } else {
+                            Handler().postDelayed({
+                                view.hideProgress()
+                                view.showAddPostError("Something wrong, please try again")
+                            },800)
+                        }
+                    } else {
+                        Handler().postDelayed({
+                            view.hideProgress()
+                            view.showAddPostError(er.message)
+                        },800)
+                    }
+                }
             } else {
                 Handler().postDelayed({
                     view.hideProgress()

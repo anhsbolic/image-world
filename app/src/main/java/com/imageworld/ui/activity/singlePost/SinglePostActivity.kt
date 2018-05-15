@@ -44,15 +44,19 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
         // PostComment
         postComment.setOnClickListener {
             val postId = post.id!!
+            val totalComments = post.totalComments
             val intentComment = Intent(this@SinglePostActivity, CommentActivity::class.java)
             intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+            intentComment.putExtra(CommentActivity.INTENT_TOTAL_COMMENTS, totalComments)
             startActivity(intentComment)
         }
 
         postTxtSeeComments.setOnClickListener {
             val postId = post.id!!
+            val totalComments = post.totalComments
             val intentComment = Intent(this@SinglePostActivity, CommentActivity::class.java)
             intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+            intentComment.putExtra(CommentActivity.INTENT_TOTAL_COMMENTS, totalComments)
             startActivity(intentComment)
         }
     }

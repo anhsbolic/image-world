@@ -43,9 +43,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     override fun initRecyclerView() {
         adapterRvPost = PostListAdapter(postList, object : PostListAdapter.OnCommentClickListener{
-            override fun onCommentClick(postId: String) {
+            override fun onCommentClick(postId: String, totalComments: Int?) {
                 val intentComment = Intent(activity, CommentActivity::class.java)
                 intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+                intentComment.putExtra(CommentActivity.INTENT_TOTAL_COMMENTS, totalComments)
                 startActivity(intentComment)
             }
         })

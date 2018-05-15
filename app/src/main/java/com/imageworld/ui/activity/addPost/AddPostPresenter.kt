@@ -28,6 +28,7 @@ class AddPostPresenter(private val view: AddPostContract.View) : AddPostContract
         post.put("user", user)
         post.put("imagePost", fileImgPost)
         post.put("caption", caption)
+        post.put("totalComments", 0)
 
         //Save Parse Object : Post
         post.saveInBackground { e ->

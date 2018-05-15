@@ -21,6 +21,7 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
     private lateinit var actionBar: ActionBar
     private lateinit var presenter: CommentPresenter
     private lateinit var postId: String
+    private var totalComments: Int? = null
     private lateinit var userProfile: UserProfile
 
     private var commentList: MutableList<PostComment> = ArrayList()
@@ -45,11 +46,17 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
 
         initRecyclerView()
 
+        // get post id then load post data
         if (intent.hasExtra(INTENT_POST_ID)) {
             postId = intent.getStringExtra(INTENT_POST_ID)
 
             // get comment list
             presenter.getPostCommentList(postId)
+        }
+
+        // get total comments on post
+        if (intent.hasExtra(INTENT_TOTAL_COMMENTS)) {
+            totalComments = intent.getIntExtra(INTENT_TOTAL_COMMENTS,0)
         }
 
         // get user data
@@ -62,7 +69,11 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
                 val urlImgProfile = userProfile.imageProfile
                 val username = userProfile.username
                 val postComment = PostComment(null, postId, urlImgProfile, username, postContent)
-                presenter.postComment(postComment)
+                var intTotalComments = 0
+                if (totalComments != null) {
+                    intTotalComments = totalComments!!
+                }
+                presenter.postComment(postComment, intTotalComments)
             } else {
                 Toast.makeText(this@CommentActivity, "Leave some comment..",
                         Toast.LENGTH_LONG).show()
@@ -136,5 +147,6 @@ class CommentActivity : AppCompatActivity(), CommentContract.View {
 
     companion object {
         const val INTENT_POST_ID = "PostId"
+        const val INTENT_TOTAL_COMMENTS = "TotalComments"
     }
 }

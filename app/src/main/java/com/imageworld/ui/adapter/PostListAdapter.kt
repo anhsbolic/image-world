@@ -20,7 +20,7 @@ class PostListAdapter(private val postList : List<Post>,
     private lateinit var mContext: Context
 
     interface OnCommentClickListener{
-        fun onCommentClick(postId: String)
+        fun onCommentClick(postId: String, totalComments: Int?)
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -63,12 +63,14 @@ class PostListAdapter(private val postList : List<Post>,
 
         holder.txtSeeComments.setOnClickListener {
             val postId = postList[holder.adapterPosition].id!!
-            onCommentClickListener.onCommentClick(postId)
+            val intTotalComments = postList[holder.adapterPosition].totalComments
+            onCommentClickListener.onCommentClick(postId, intTotalComments)
         }
 
         holder.txtComment.setOnClickListener {
             val postId = postList[holder.adapterPosition].id!!
-            onCommentClickListener.onCommentClick(postId)
+            val intTotalComments = postList[holder.adapterPosition].totalComments
+            onCommentClickListener.onCommentClick(postId, intTotalComments)
         }
     }
 
