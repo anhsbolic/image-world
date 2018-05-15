@@ -214,11 +214,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     override fun setGridView(postList: MutableList<Post>) {
-        profileRvPost.layoutManager = layoutManagerRvPostGrid
-        profileRvPost.addItemDecoration(gridItemDecoration)
-        profileRvPost.adapter = adapterRvPostGrid
-
         if (profileRvPost != null) {
+            profileRvPost.layoutManager = layoutManagerRvPostGrid
+            profileRvPost.addItemDecoration(gridItemDecoration)
+            profileRvPost.adapter = adapterRvPostGrid
+
             if (this.postList.isNotEmpty()) {
                 this.postList.clear()
             }
@@ -232,11 +232,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     override fun setListView(postList: MutableList<Post>) {
-        profileRvPost.adapter = adapterRvPostList
-        profileRvPost.layoutManager = layoutManagerRvPostList
-        profileRvPost.removeItemDecoration(gridItemDecoration)
-
         if (profileRvPost != null) {
+            profileRvPost.adapter = adapterRvPostList
+            profileRvPost.layoutManager = layoutManagerRvPostList
+            profileRvPost.removeItemDecoration(gridItemDecoration)
+
             if (this.postList.isNotEmpty()) {
                 this.postList.clear()
             }

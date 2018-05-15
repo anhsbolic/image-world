@@ -17,6 +17,7 @@ class HomePresenter(private val view: HomeContract.View) : HomeContract.Presente
         val user = ParseUser.getCurrentUser()
         val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
         query.whereNotEqualTo("user", user)
+        query.orderByDescending("createdAt")
         query.findInBackground { userPosts, e ->
             if (e == null) {
                 if (userPosts.isNotEmpty()) {

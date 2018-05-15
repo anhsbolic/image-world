@@ -43,6 +43,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val user = ParseUser.getCurrentUser()
         val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
         query.whereEqualTo("user", user)
+        query.orderByDescending("createdAt")
         query.findInBackground { userPosts, e ->
             if (e == null) {
                 if (userPosts.isNotEmpty()) {
@@ -76,6 +77,7 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
         val user = ParseUser.getCurrentUser()
         val query: ParseQuery<ParseObject> = ParseQuery.getQuery("UserPost")
         query.whereEqualTo("user", user)
+        query.orderByDescending("createdAt")
         query.findInBackground { userPosts, e ->
             if (e == null) {
                 if (userPosts.isNotEmpty()) {
