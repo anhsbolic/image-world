@@ -51,8 +51,9 @@ class ProfilePresenter(private val view : ProfileContract.View) : ProfileContrac
                         val imgFile : ParseFile = userPost.getParseFile("imagePost")
                         val imgPost = imgFile.url
                         val caption = userPost.getString("caption")
+                        val totalComments = userPost.getInt("totalComments")
 
-                        val post = Post(objectId, urlImgProfile, username, imgPost, caption, null)
+                        val post = Post(objectId, urlImgProfile, username, imgPost, caption, totalComments)
                         postList.add(post)
                     }
 

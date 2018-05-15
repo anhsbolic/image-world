@@ -52,9 +52,19 @@ class PostListAdapter(private val postList : List<Post>,
         Glide.with(mContext).load(postList[position].imagePost).into(holder.imgPost)
         holder.txtPostUsername.text = postList[position].username
         holder.txtPost.text = postList[position].caption
-//        val totalComments = postList[position].totalComment
-//        val seeComments = "see $totalComments comments"
-//        holder.txtSeeComments.text = seeComments
+        val totalComments = postList[position].totalComments
+        if (totalComments != null && totalComments > 0) {
+            holder.txtSeeComments.visibility = View.VISIBLE
+            val seeComments = "see $totalComments comments"
+            holder.txtSeeComments.text = seeComments
+        } else {
+            holder.txtSeeComments.visibility = View.INVISIBLE
+        }
+
+        holder.txtSeeComments.setOnClickListener {
+            val postId = postList[holder.adapterPosition].id!!
+            onCommentClickListener.onCommentClick(postId)
+        }
 
         holder.txtComment.setOnClickListener {
             val postId = postList[holder.adapterPosition].id!!

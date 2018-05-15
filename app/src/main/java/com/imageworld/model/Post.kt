@@ -11,4 +11,4 @@ data class Post(var id: String?,
                 var username: String?,
                 var imagePost: String?,
                 var caption: String?,
-                var listComments: List<String>?) : Parcelable
+                var totalComments: Int?) : Parcelable

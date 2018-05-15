@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBar
+import android.view.View
 import com.bumptech.glide.Glide
 import com.imageworld.R
 import com.imageworld.model.Post
@@ -47,6 +48,13 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
             intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
             startActivity(intentComment)
         }
+
+        postTxtSeeComments.setOnClickListener {
+            val postId = post.id!!
+            val intentComment = Intent(this@SinglePostActivity, CommentActivity::class.java)
+            intentComment.putExtra(CommentActivity.INTENT_POST_ID, postId)
+            startActivity(intentComment)
+        }
     }
 
     override fun updateUi(post: Post) {
@@ -60,6 +68,14 @@ class SinglePostActivity : AppCompatActivity(), SinglePostContract.View {
         Glide.with(this@SinglePostActivity).load(post.imagePost).into(postImg)
         postTxtPostUsername.text = post.username
         postTxtPost.text = post.caption
+        val totalComments = post.totalComments
+        if (totalComments != null && totalComments > 0) {
+            postTxtSeeComments.visibility = View.VISIBLE
+            val seeComments = "see $totalComments comments"
+            postTxtSeeComments.text = seeComments
+        } else {
+            postTxtSeeComments.visibility = View.INVISIBLE
+        }
     }
 
     companion object {
